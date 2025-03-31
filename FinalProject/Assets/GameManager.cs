@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public Camera GameCamera;
     public Canvas testHealthArea;
+    public Enemy testEnemy;
 
     public GameObject HealthBarDisplayPrefab;
 
@@ -90,19 +91,19 @@ public class GameManager : MonoBehaviour
     public void initEnemyHealthBarDisplays(){
         enemyCanvases = new List<Canvas>();
         enemyHealthBars = new List<HealthBarDisplay>();
-        for(int i = 0; i < enemies.Count; i++){
+        addEnemyHealthBarDisplay(testEnemy);
+        /*for(int i = 0; i < enemies.Count; i++){
             addEnemyHealthBarDisplay(enemies[i]);
-        }
+        }*/
     }
 
     public void addEnemyHealthBarDisplay(Enemy enemy){
-        Canvas newEnemyCanvas = testHealthArea;//newCanvas.ConvertTo<Canvas>();
-        Vector3 cavnasPosition = newEnemyCanvas.transform.position;
+        Canvas newEnemyCanvas = creatNewCanvas(enemy.transform.position, enemy.transform);
         GameObject newBarDisplay = Instantiate(HealthBarDisplayPrefab,new Vector3(0, 0, 0), Quaternion.identity, newEnemyCanvas.transform);
         newBarDisplay.transform.localPosition = Vector3.zero;
         HealthBarDisplay newHealthBarDisplay = newBarDisplay.ConvertTo<HealthBarDisplay>();
         newHealthBarDisplay.intializeHealthBar(enemy.maxHealth, EnemyBarPrefab, EnemyBarFaded, EnemyBarActive, new Vector3(0, 0, 0));
-        newHealthBarDisplay.transform.localPosition = new Vector3(0, 0, 3);
+        newHealthBarDisplay.transform.localPosition = new Vector3(0, 1, 0);
         enemyHealthBars.Add(newHealthBarDisplay);
        /* Vector3 enemyPosition = enemy.transform.position;
         Debug.Log(enemyPosition);
@@ -119,6 +120,13 @@ public class GameManager : MonoBehaviour
         newHealthBarDisplay.displayHealthBar(enemy.maxHealth, enemy.currentHealth);
         enemyHealthBars.Add(newHealthBarDisplay);
     */
+    }
+
+    public Canvas creatNewCanvas(Vector3 position, Transform parent){
+        GameObject newCanvas = Instantiate(enemyHealthCanvasPrefab, position, Quaternion.identity, parent);
+        Canvas newEnemyCanvas = newCanvas.ConvertTo<Canvas>();
+        newEnemyCanvas.transform.localPosition = Vector3.zero;
+        return newEnemyCanvas;
     }
 
     public void displayEnemyHealthBars(){
