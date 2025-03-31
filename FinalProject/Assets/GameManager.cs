@@ -5,6 +5,7 @@ using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Linq.Expressions;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class GameManager : MonoBehaviour
     public Vector3 globalRight = new Vector3(0, 0, 1);
 
     public Camera GameCamera;
-    public GameObject testHealthArea;
+    public Canvas testHealthArea;
 
     public GameObject HealthBarDisplayPrefab;
 
@@ -46,7 +47,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         loadLevel(0);
-        playerHealthDisplay.intializeHealthBar(player.maxHealth, PlayerBarPrefab, PlayerBarFaded, PlayerBarActive);
+        playerHealthDisplay.intializeHealthBar(player.maxHealth, PlayerBarPrefab, PlayerBarFaded, PlayerBarActive, player.transform.position);
         initEnemyHealthBarDisplays();
         
     }
@@ -54,7 +55,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerHealthDisplay.displayHealthBar(player.maxHealth, player.currentHealth);
+        playerHealthDisplay.displayHealthBar(player.maxHealth, player.currentHealth/*, player.transform.position*/);
         displayEnemyHealthBars();
     }
 
@@ -95,23 +96,36 @@ public class GameManager : MonoBehaviour
     }
 
     public void addEnemyHealthBarDisplay(Enemy enemy){
-        Vector3 enemyPosition = enemy.transform.position;
-        GameObject newCanvas = Instantiate(enemyHealthCanvasPrefab, enemyPosition, Quaternion.identity, enemy.transform);
-        Canvas newEnemyCanvas = newCanvas.ConvertTo<Canvas>();
-        newEnemyCanvas.transform.rotation = GameCamera.transform.rotation;
-        enemyCanvases.Add(newEnemyCanvas);
-        GameObject newBarDisplay = Instantiate(HealthBarDisplayPrefab, new Vector3(enemyPosition.x, enemyPosition.y+2, enemyPosition.z), Quaternion.identity, newEnemyCanvas.transform);
+        Canvas newEnemyCanvas = testHealthArea;//newCanvas.ConvertTo<Canvas>();
+        Vector3 cavnasPosition = newEnemyCanvas.transform.position;
+        GameObject newBarDisplay = Instantiate(HealthBarDisplayPrefab,new Vector3(0, 0, 0), Quaternion.identity, newEnemyCanvas.transform);
+        newBarDisplay.transform.localPosition = Vector3.zero;
         HealthBarDisplay newHealthBarDisplay = newBarDisplay.ConvertTo<HealthBarDisplay>();
-        newHealthBarDisplay.GetComponent<RectTransform>();
-        newHealthBarDisplay.intializeHealthBar(enemy.maxHealth, EnemyBarPrefab, EnemyBarFaded, EnemyBarActive);
+        newHealthBarDisplay.intializeHealthBar(enemy.maxHealth, EnemyBarPrefab, EnemyBarFaded, EnemyBarActive, new Vector3(0, 0, 0));
+        newHealthBarDisplay.transform.localPosition = new Vector3(0, 0, 3);
+        enemyHealthBars.Add(newHealthBarDisplay);
+       /* Vector3 enemyPosition = enemy.transform.position;
+        Debug.Log(enemyPosition);
+        //GameObject newCanvas = Instantiate(enemyHealthCanvasPrefab, enemyPosition, Quaternion.identity, enemy.transform);
+        Canvas newEnemyCanvas = testHealthArea;//newCanvas.ConvertTo<Canvas>();
+        Vector3 cavnasPosition = newEnemyCanvas.transform.position;
+        GameObject newBarDisplay = Instantiate(HealthBarDisplayPrefab, cavnasPosition + new Vector3(0, 2, 0), Quaternion.identity, newEnemyCanvas.transform);
+        HealthBarDisplay newHealthBarDisplay = newBarDisplay.ConvertTo<HealthBarDisplay>();
+        Debug.Log(newHealthBarDisplay.GetComponent<Transform>().position);
+        Debug.Log(newHealthBarDisplay.GetComponent<RectTransform>().position);
+        //newEnemyCanvas.transform.rotation = GameCamera.transform.rotation;
+        enemyCanvases.Add(newEnemyCanvas);
+        newHealthBarDisplay.intializeHealthBar(enemy.maxHealth, EnemyBarPrefab, EnemyBarFaded, EnemyBarActive, 0);
         newHealthBarDisplay.displayHealthBar(enemy.maxHealth, enemy.currentHealth);
         enemyHealthBars.Add(newHealthBarDisplay);
+    */
     }
 
     public void displayEnemyHealthBars(){
-        for(int i = 0; i < enemies.Count; i++){
+        enemyHealthBars[0].displayHealthBar(3,3/*, new Vector3(0, 0, 0)*/);
+        /*for(int i = 0; i < enemies.Count; i++){
             enemyHealthBars[i].displayHealthBar(enemies[i].maxHealth, enemies[i].currentHealth);
-        }
+        }*/
     }
 
 }

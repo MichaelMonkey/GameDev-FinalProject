@@ -26,13 +26,13 @@ public class HealthBarDisplay : MonoBehaviour
         
     }
 
-    public void intializeHealthBar(int maxHealth, GameObject barPrefab, Color fadedC, Color activeC){
+    public void intializeHealthBar(int maxHealth, GameObject barPrefab, Color fadedC, Color activeC, Vector3 position){
         BarPrefab = barPrefab;
         fadedColor = fadedC;
         activeColor = activeC;
         bars = new GameObject[maxHealth];
         for(int i = 0; i < maxHealth; i++){
-            GameObject newBar = Instantiate(BarPrefab, new Vector3(0, 0, 0), Quaternion.identity, this.transform);
+            GameObject newBar = Instantiate(BarPrefab, position, Quaternion.identity, this.transform);
             bars[i] = newBar;
         }
     }
