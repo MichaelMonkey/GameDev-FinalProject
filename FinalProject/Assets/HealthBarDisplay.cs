@@ -33,6 +33,10 @@ public class HealthBarDisplay : MonoBehaviour
         bars = new GameObject[maxHealth];
         for(int i = 0; i < maxHealth; i++){
             GameObject newBar = Instantiate(BarPrefab, position, Quaternion.identity, this.transform);
+            /*Vector3 barPosition = newBar.GetComponent<RectTransform>().position;
+            barPosition.z = 0;
+            newBar.GetComponent<RectTransform>().position = barPosition;
+            */newBar.transform.localPosition = Vector3.zero;
             bars[i] = newBar;
         }
     }

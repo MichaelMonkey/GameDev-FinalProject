@@ -9,14 +9,11 @@ using System.Linq.Expressions;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Environment")]
     public Vector3 globalBackward = new Vector3(1, 0, 0);
     public Vector3 globalRight = new Vector3(0, 0, 1);
 
     public Camera GameCamera;
-    public Canvas testHealthArea;
-    public Enemy testEnemy;
-
-    public GameObject HealthBarDisplayPrefab;
 
     [Header("Level Generation")]
     public int currentLevel = 0;
@@ -42,6 +39,9 @@ public class GameManager : MonoBehaviour
     public List<HealthBarDisplay> enemyHealthBars;
     public List<Canvas> enemyCanvases;
 
+    [Header("Health Bars")]
+    public GameObject HealthBarDisplayPrefab;
+    public float overheadOffset = 0.5f;
 
    
 
@@ -86,12 +86,16 @@ public class GameManager : MonoBehaviour
         levelBoard[4,2] = '#';
         levelBoard[4,3] = '#';
         levelBoard[3,2] = 'p';
+        levelBoard[2,3] = 'p';
     }
 
     public void initEnemyHealthBarDisplays(){
         enemyCanvases = new List<Canvas>();
         enemyHealthBars = new List<HealthBarDisplay>();
-        addEnemyHealthBarDisplay(testEnemy);
+        //addEnemyHealthBarDisplay(testEnemy);
+        for(int i = 0; i < enemies.Count; i++){
+            addEnemyHealthBarDisplay(enemies[i]);
+        }
         /*for(int i = 0; i < enemies.Count; i++){
             addEnemyHealthBarDisplay(enemies[i]);
         }*/
@@ -99,11 +103,12 @@ public class GameManager : MonoBehaviour
 
     public void addEnemyHealthBarDisplay(Enemy enemy){
         Canvas newEnemyCanvas = creatNewCanvas(enemy.transform.position, enemy.transform);
-        GameObject newBarDisplay = Instantiate(HealthBarDisplayPrefab,new Vector3(0, 0, 0), Quaternion.identity, newEnemyCanvas.transform);
+        enemyCanvases.Add(newEnemyCanvas);
+        GameObject newBarDisplay = Instantiate(HealthBarDisplayPrefab, new Vector3(0, 0, 0), Quaternion.identity, newEnemyCanvas.transform);
         newBarDisplay.transform.localPosition = Vector3.zero;
         HealthBarDisplay newHealthBarDisplay = newBarDisplay.ConvertTo<HealthBarDisplay>();
         newHealthBarDisplay.intializeHealthBar(enemy.maxHealth, EnemyBarPrefab, EnemyBarFaded, EnemyBarActive, new Vector3(0, 0, 0));
-        newHealthBarDisplay.transform.localPosition = new Vector3(0, 1, 0);
+        newHealthBarDisplay.transform.localPosition = new Vector3(0, overheadOffset, 0);
         enemyHealthBars.Add(newHealthBarDisplay);
        /* Vector3 enemyPosition = enemy.transform.position;
         Debug.Log(enemyPosition);
@@ -130,7 +135,15 @@ public class GameManager : MonoBehaviour
     }
 
     public void displayEnemyHealthBars(){
-        enemyHealthBars[0].displayHealthBar(3,3/*, new Vector3(0, 0, 0)*/);
+        //enemyHealthBars[0].displayHealthBar(3,3/*, new Vector3(0, 0, 0)*/);
+        for(int i = 0; i < enemyHealthBars.Count; i++){
+            Enemy enemy = enemies[i];
+            enemyHealthBars[i].displayHealthBar(enemy.maxHealth, enemy.currentHealth);
+        }
+        //enemyHealthBars[1].displayHealthBar(enemies[0].maxHealth, enemies[0].currentHealth);
+        for(int i = 0; i < enemyCanvases.Count; i++){
+            enemyCanvases[i].transform.rotation = GameCamera.transform.rotation;
+        }
         /*for(int i = 0; i < enemies.Count; i++){
             enemyHealthBars[i].displayHealthBar(enemies[i].maxHealth, enemies[i].currentHealth);
         }*/
