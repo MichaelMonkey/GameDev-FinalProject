@@ -12,7 +12,6 @@ public class Enemy : MonoBehaviour
     public int currentHealth = 3;
     public float enemySpeed = 3f;
 
-    public Boolean turn = false;
 
     /*
     [Header("Enemy Types")]
@@ -26,10 +25,10 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if(turn == true){
-            Move(randomDirection());
-            turn = false;
-        }
+    }
+
+    public void randomMove(){
+        Move(randomDirection());
     }
 
     public void Move(Vector3 direction){

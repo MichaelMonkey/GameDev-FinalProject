@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,14 +17,10 @@ public class PlayerInputHandler : MonoBehaviour
 
     void Update()
     {
-        if(player.turn == true){
-            processKeyClicks();
-        }
-        processMouseClicks();
-        //processArrowClicks();
     }
 
-    void processKeyClicks(){
+    public Boolean processKeyClicks(){
+        Boolean didMove = false;
         Vector3 finalMovement = Vector3.zero;
         Vector3 globalBackward = new Vector3(1, 0, 0);
         Vector3 globalRight = new Vector3(0, 0, 1);
@@ -31,38 +28,39 @@ public class PlayerInputHandler : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.W)){
             finalMovement -= globalBackward;
             player.previousDirection = finalMovement;
-            player.turn = false;
+            didMove = true;
         }
         else if(Input.GetKeyDown(KeyCode.A)){
             finalMovement -= globalRight;
             player.previousDirection = finalMovement;
-            player.turn = false;
+            didMove = true;
         }
         else if(Input.GetKeyDown(KeyCode.S)){
             finalMovement += globalBackward;
             player.previousDirection = finalMovement;
-            player.turn = false;
+            didMove = true;
         }
         else if(Input.GetKeyDown(KeyCode.D)){
             finalMovement += globalRight;
             player.previousDirection = finalMovement;
-            player.turn = false;
+            didMove = true;
         } else if(Input.GetKeyDown(KeyCode.RightBracket)){
             player.revertPosition();
         }
         player.MoveWithCC(finalMovement);
+        return didMove;
     }
 
-    void processMouseClicks(){
+    public void processMouseClicks(){
          if(Input.GetMouseButtonDown(0)){
             Debug.Log("Pressed left-click.");
          } else if(Input.GetMouseButtonDown(1)){
             Debug.Log("Pressed right-click.");
-            returnSelector();
+            //returnSelector();
          }
     }
     
-    void processArrowClicks(){
+    public void processArrowClicks(){
         Vector3 selectorMovement = Vector3.zero;
         Vector3 globalForward = new Vector3(0, 0, 1);
         Vector3 globalRight = new Vector3(1, 0, 0);
@@ -82,7 +80,7 @@ public class PlayerInputHandler : MonoBehaviour
         gridSelector.Move(selectorMovement, player.playerSpeed);
     }
 
-    void returnSelector(){
+    /*void returnSelector(){
         gridSelector.Teleport(player.transform.position);
-    }
+    }*/
 }

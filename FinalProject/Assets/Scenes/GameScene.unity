@@ -637,11 +637,15 @@ MonoBehaviour:
   globalBackward: {x: 1, y: 0, z: 0}
   globalRight: {x: 0, y: 0, z: 1}
   GameCamera: {fileID: 330585545}
+  playerTurn: 0
+  enemyTurn: 0
+  turnStaggerTime: 1
   currentLevel: 0
   boardSizeX: 0
   boardSizeZ: 0
   levelGenerator: {fileID: 331941052}
   player: {fileID: 1725802754}
+  playerInputHandler: {fileID: 1263846894}
   playerHealthDisplay: {fileID: 935219748}
   PlayerBarPrefab: {fileID: 1557454108720684084, guid: 7402a42311c31a540a4a6058187b9031, type: 3}
   PlayerBarFaded: {r: 0.5, g: 0.5, b: 0.5, a: 1}

@@ -103,8 +103,18 @@ public class MoveManager : MonoBehaviour
 
     public Boolean InXLine(int from_x, int to_x, int from_z, int to_z, int range){
         Boolean ret = false;
-        for(int z = 1; z < range; z++){
-            if((OnZRange(from_z, to_z, z, 0)) && (OnXRange(from_x, to_x, 0, 0))){
+        for(int z = 1; z < 1+range; z++){
+            if(OnZRange(from_z, to_z, z, 0) && OnXRange(from_x, to_x, 0, 0)){
+                ret = true;
+            }
+        }
+        return ret;
+    }
+
+    public Boolean InZLine(int from_x, int to_x, int from_z, int to_z, int range){
+        Boolean ret = false;
+        for(int x = 1; x < 1+range; x++){
+            if(OnZRange(from_z, to_z, 0, 0) && OnXRange(from_x, to_x, x, 0)){
                 ret = true;
             }
         }
@@ -116,7 +126,7 @@ public class MoveManager : MonoBehaviour
         int p_x = (int) player.transform.position.x / 3;
         int p_z = (int) player.transform.position.z / 3;
         if(InXLine(e_x, p_x, e_z, p_z, 1)){
-            Debug.Log("EyesOnPlayer!");
+            Debug.Log("EyesOnPlayer:ZLine!");
             return true;
         }
         return false;

@@ -6,6 +6,9 @@ using Quaternion = UnityEngine.Quaternion;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq.Expressions;
+using System;
+using System.Collections;
+using UnityEditor.Rendering.Universal;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +18,11 @@ public class GameManager : MonoBehaviour
 
     public Camera GameCamera;
 
+    [Header("Turns")]
+    public Boolean playerTurn;
+    public Boolean enemyTurn;
+    public float turnStaggerTime = 2f;
+
     [Header("Level Generation")]
     public int currentLevel = 0;
     public char[,] levelBoard;
@@ -23,6 +31,7 @@ public class GameManager : MonoBehaviour
     public LevelGenerator levelGenerator;
     [Header("Player")]
     public Player player;
+    public PlayerInputHandler playerInputHandler;
     public HealthBarDisplay playerHealthDisplay;
     public GameObject PlayerBarPrefab;
     public Color PlayerBarFaded = Color.gray;
@@ -47,6 +56,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        
         loadLevel(0);
         playerHealthDisplay.intializeHealthBar(player.maxHealth, PlayerBarPrefab, PlayerBarFaded, PlayerBarActive, player.transform.position);
         initEnemyHealthBarDisplays();
@@ -58,9 +68,13 @@ public class GameManager : MonoBehaviour
     {
         playerHealthDisplay.displayHealthBar(player.maxHealth, player.currentHealth/*, player.transform.position*/);
         displayEnemyHealthBars();
+        doPlayerTurn();
+        doEnemyTurn();
     }
 
     public void loadLevel(int level){
+        playerTurn = true;
+        enemyTurn = false;
         generateLevelBoard(level);
         levelGenerator.setColors(level);
         levelGenerator.generateLevelTiles(levelBoard, boardSizeX, boardSizeZ);
@@ -149,4 +163,40 @@ public class GameManager : MonoBehaviour
         }*/
     }
 
+    public void doPlayerTurn(){
+        if(playerTurn == true){
+            Boolean didMove = playerInputHandler.processKeyClicks();
+            if(didMove){
+                StartCoroutine(SwitchTurnStagger());
+            }
+        }
+        //playerInputHandler.processMouseClicks();
+    }
+
+    public void doEnemyTurn(){
+        if(enemyTurn == true){
+            for(int i = 0; i < enemies.Count; i++){
+                enemies[i].randomMove();
+            }
+            StartCoroutine(SwitchTurnStagger());
+        }
+    }
+
+    public void changeTurn(){
+        
+    }
+
+    IEnumerator SwitchTurnStagger(){
+        if(playerTurn){
+            playerTurn = false;
+            yield return new WaitForSeconds(turnStaggerTime);
+            enemyTurn = true;
+            Debug.Log("EnemyTurnStart");
+        } else {
+            enemyTurn = false;
+            yield return new WaitForSeconds(turnStaggerTime);
+            playerTurn = true;
+            Debug.Log("PlayerTurnStart");
+        }
+    }
 }
