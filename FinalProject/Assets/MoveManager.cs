@@ -1,10 +1,13 @@
 using System;
+using System.Data;
 using System.Threading;
+using Unity.Collections;
 using UnityEngine;
 
 public class MoveManager : MonoBehaviour
 {
     public GameManager gameManager;
+    public Enemy currentEnemy;
     public int gameSize = 3;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -121,14 +124,41 @@ public class MoveManager : MonoBehaviour
         return ret;
     }
 
+    public void enemyHaveTurn(Enemy enemy){
+        currentEnemy = enemy;
+        int[] p_coords = findPlayerOnBoard();
+        int p_x = p_coords[0];
+        int p_z = p_coords[1];
+        int[] e_coords = findEnemyOnBoard();
+        int e_x = e_coords[0];
+        int e_z = e_coords[1];
+        //int ret = -1;
+        Debug.Log("Player on board at [x,z]: "+ p_x+","+p_z);
+        Debug.Log("Enemy on board at [x,z]: "+ e_x+","+e_z);
+    }
+
     public Boolean playerWithinEnemyRange(int e_x, int e_z){
-        Player player = gameManager.player;
-        int p_x = (int) player.transform.position.x / 3;
-        int p_z = (int) player.transform.position.z / 3;
+        int[] p_coords = findPlayerOnBoard();
+        int p_x = p_coords[0];
+        int p_z = p_coords[1];
         if(InXLine(e_x, p_x, e_z, p_z, 1)){
             Debug.Log("EyesOnPlayer:ZLine!");
             return true;
         }
         return false;
+    }
+
+    public int[] findPlayerOnBoard(){
+        Player player = gameManager.player;
+        int x = (int) player.transform.position.x / 3;
+        int z = (int) player.transform.position.z / 3;
+        int[] ret = {x, z};
+        return ret;
+    }
+    public int[] findEnemyOnBoard(){
+        int x = (int) currentEnemy.transform.position.x / 3;
+        int z = (int) currentEnemy.transform.position.z / 3;
+        int[] ret = {x, z};
+        return ret;
     }
 }

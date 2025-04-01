@@ -640,6 +640,7 @@ MonoBehaviour:
   playerTurn: 0
   enemyTurn: 0
   turnStaggerTime: 1
+  moveManager: {fileID: 1185496789}
   currentLevel: 0
   boardSizeX: 0
   boardSizeZ: 0
@@ -721,6 +722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1112280776}
+  currentEnemy: {fileID: 0}
   gameSize: 3
 --- !u!4 &1185496790
 Transform:

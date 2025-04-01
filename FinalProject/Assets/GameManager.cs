@@ -18,10 +18,11 @@ public class GameManager : MonoBehaviour
 
     public Camera GameCamera;
 
-    [Header("Turns")]
+    [Header("Turns and Moves")]
     public Boolean playerTurn;
     public Boolean enemyTurn;
     public float turnStaggerTime = 2f;
+    public MoveManager moveManager;
 
     [Header("Level Generation")]
     public int currentLevel = 0;
@@ -176,7 +177,8 @@ public class GameManager : MonoBehaviour
     public void doEnemyTurn(){
         if(enemyTurn == true){
             for(int i = 0; i < enemies.Count; i++){
-                enemies[i].randomMove();
+                moveManager.enemyHaveTurn(enemies[i]);
+                //enemies[i].randomMove();
             }
             StartCoroutine(SwitchTurnStagger());
         }

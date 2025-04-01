@@ -12,7 +12,6 @@ public class Enemy : MonoBehaviour
     public int currentHealth = 3;
     public float enemySpeed = 3f;
 
-
     /*
     [Header("Enemy Types")]
     public GameObject[] tester;
