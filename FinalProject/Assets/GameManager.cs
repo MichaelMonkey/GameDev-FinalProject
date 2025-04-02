@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
         levelBoard[0,0] = 'P';
         levelBoard[4,2] = '#';
         levelBoard[4,3] = '#';
-        levelBoard[3,2] = 'p';
+        //levelBoard[3,2] = 'p';
         levelBoard[2,3] = 'p';
     }
 
@@ -166,6 +166,9 @@ public class GameManager : MonoBehaviour
 
     public void doPlayerTurn(){
         if(playerTurn == true){
+            playerInputHandler.processNumberClicks();
+            //playerInputHandler.processMouseClicks();
+            playerInputHandler.processArrowClicks();
             Boolean didMove = playerInputHandler.processKeyClicks();
             if(didMove){
                 StartCoroutine(SwitchTurnStagger());
@@ -193,12 +196,12 @@ public class GameManager : MonoBehaviour
             playerTurn = false;
             yield return new WaitForSeconds(turnStaggerTime);
             enemyTurn = true;
-            Debug.Log("EnemyTurnStart");
+            //Debug.Log("EnemyTurnStart");
         } else {
             enemyTurn = false;
             yield return new WaitForSeconds(turnStaggerTime);
             playerTurn = true;
-            Debug.Log("PlayerTurnStart");
+            //Debug.Log("PlayerTurnStart");
         }
     }
 }

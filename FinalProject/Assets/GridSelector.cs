@@ -28,8 +28,18 @@ public class GridSelector : MonoBehaviour
     public void Move(Vector3 direction, float speed){
         transform.position += direction*speed;
     }
+
+    public void MoveAroundPlayer(Vector3 position, Vector3 direction, float speed){
+        position += direction*speed;
+        Teleport(position);
+    }
+
     public void Teleport(Vector3 position){
         transform.position = position;
+    }
+
+    public void Disappear(){
+        Teleport(new Vector3(-100, 0, -100));
     }
 
     public void setColor(int set){

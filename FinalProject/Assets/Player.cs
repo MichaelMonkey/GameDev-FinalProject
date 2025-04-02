@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     public float playerSpeed;
     public float gravity = -9.8f;
     public Vector3 previousDirection = new Vector3(0, 0, 0);
+    public MoveManager moveManager;
     
     [Header("Keys")]
     public int keysCollected = 0;
@@ -47,7 +48,7 @@ public class Player : MonoBehaviour
         ApplyGravityWithCC();
     }
 
-    public void MoveWithCC(Vector3 direction){
+    public void MoveWithCC(Vector3 direction, int check){
         if(!playing){
             return;
         }
@@ -55,6 +56,12 @@ public class Player : MonoBehaviour
         cc.Move(direction * playerSpeed);
         transform.LookAt(transform.position + direction);
         moveCamera();
+        if(check == 1){
+            Boolean hit = moveManager.checkPlayerMoveAttack();
+            if(hit){
+                revertPosition();
+            }
+        }
     }
 
     public void moveCamera(){
@@ -66,7 +73,7 @@ public class Player : MonoBehaviour
     }
 
     public void revertPosition(){
-        MoveWithCC(-1*previousDirection);
+        MoveWithCC(-1*previousDirection, -1);
         previousDirection = new Vector3(0, 0, 0);
     }
 
@@ -83,7 +90,7 @@ public class Player : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //Debug.Log("hit! "+other.gameObject.tag);
-        if(other.gameObject.CompareTag("Key")){
+        /*if(other.gameObject.CompareTag("Key")){
             pickupEvent();
             Destroy(other.gameObject);
         }
@@ -94,7 +101,8 @@ public class Player : MonoBehaviour
             } else {
                 wallEvent();
             }
-        }
+        }*/
+        /*
         if(other.gameObject.CompareTag("Wall")){
             wallEvent();
         }
@@ -103,9 +111,9 @@ public class Player : MonoBehaviour
         }
         if(other.gameObject.CompareTag("Trap")){
             StartCoroutine(DeathEvent());
-        }
+        }*/
     }
-
+/*
     void pickupEvent(){
         audioSource.resource = pickupSound;
         audioSource.Play();
@@ -123,7 +131,6 @@ public class Player : MonoBehaviour
         audioSource.Play();
     }
 
-    
 
     IEnumerator DeathEvent(){
         playing = false;
@@ -139,4 +146,5 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(winSound.length+0.1f);
         SceneManager.LoadScene("WinScreen");
     }
+*/
 }
