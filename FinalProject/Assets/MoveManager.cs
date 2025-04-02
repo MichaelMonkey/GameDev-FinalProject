@@ -1,9 +1,10 @@
 using System;
 using System.Data;
 using System.Threading;
-using Unity.Collections;
+//using Unity.Collections;
 using UnityEngine;
 
+using System.Collections;
 public class MoveManager : MonoBehaviour
 {
     public GameManager gameManager;
@@ -137,6 +138,7 @@ public class MoveManager : MonoBehaviour
         Debug.Log("Enemy on board at [x,z]: "+ e_x+","+e_z);
     }
 
+    
     public Boolean playerWithinEnemyRange(int e_x, int e_z){
         int[] p_coords = findPlayerOnBoard();
         int p_x = p_coords[0];
@@ -161,4 +163,46 @@ public class MoveManager : MonoBehaviour
         int[] ret = {x, z};
         return ret;
     }
+
+    public int[,] GetListOfLegalEnemyMoves(int from_x, int from_z){
+        int[,] ret = new int[0,2];
+        int boardSizeX = gameManager.boardSizeX;
+        int boardSizeZ = gameManager.boardSizeZ;
+        for(int x = 0; x < boardSizeX; x++){
+            for(int z = 0; z < boardSizeZ; z++){
+                int[] curr_move = {x, z};
+
+            }
+        }
+        /*
+        List<int> validMoves; 
+        validMoves = new List<int>();
+        */
+        return ret;
+    }
+
+    public int[,] addLegalMove(int[,] original, int[] add){
+        int size = original.Length;
+        int[,] ret = new int[size+1,2];
+        for(int i = 0; i < size; i++){
+            ret[i,0] = original[i,0];
+            ret[i,1] = original[i,1];
+        }
+        ret[size,0] = add[0];
+        ret[size,1] = add[1];
+        return ret;
+    }
+
+    public int isEnemyMoveLegal(int from_x, int from_z, int to_x, int to_z){
+        if(OutOfBounds(to_x, to_z)){
+            return -1;
+        }
+        if(InXLine(from_x, to_x, from_z, to_z, 1) || InZLine(from_x, to_x, from_z, to_z, 1) ){
+            if(IsFreeSpace(to_x, to_z)){
+                return 0;
+            }
+        }
+        return -1;
+    }
+
 }
