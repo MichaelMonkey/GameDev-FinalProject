@@ -56,12 +56,12 @@ public class Player : MonoBehaviour
         cc.Move(direction * playerSpeed);
         transform.LookAt(transform.position + direction);
         moveCamera();
-        if(check == 1){
+        /*if(check == 1){
             Boolean hit = moveManager.checkPlayerMoveAttack();
             if(hit){
                 revertPosition();
             }
-        }
+        }*/
     }
 
     public void moveCamera(){

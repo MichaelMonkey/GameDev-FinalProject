@@ -10,6 +10,7 @@ public class PlayerInputHandler : MonoBehaviour
     public enum PlayerChooseMove {MOVE, ATTACK};
     public PlayerChooseMove pcm = PlayerChooseMove.MOVE;
 
+    int setDirection = -1;
     Vector3 selectorPosition = new Vector3(0, 0, 0);
 
     void Start()
@@ -70,29 +71,41 @@ public class PlayerInputHandler : MonoBehaviour
          }
     }
     
-    public void processArrowClicks(){
+    public int processArrowClicks(){
         if(isMoving()){
-            return;
+            return -1;
         }
+        int direction = -1;
         Vector3 selectorMovement = Vector3.zero;
         Vector3 globalBackward = new Vector3(1, 0, 0);
         Vector3 globalRight = new Vector3(0, 0, 1);
         if(Input.GetKeyDown(KeyCode.UpArrow)){
             selectorMovement -= globalBackward;
             gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed); 
+            setDirection = 1;
         }
         else if(Input.GetKeyDown(KeyCode.LeftArrow)){
             selectorMovement -= globalRight;
-                gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed);
+            gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed);
+            setDirection = 4;
         }
         else if(Input.GetKeyDown(KeyCode.DownArrow)){
             selectorMovement += globalBackward;
             gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed);
+            setDirection = 3;
         }
         else if(Input.GetKeyDown(KeyCode.RightArrow)){
             selectorMovement += globalRight;
             gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed);
+            setDirection = 2;
+        } else if (Input.GetKeyDown(KeyCode.Space)){
+            if(setDirection != -1){
+                direction = setDirection;
+                gridSelector.Disappear();
+                setDirection = -1;
+            }
         }
+        return direction;
     }
 
 

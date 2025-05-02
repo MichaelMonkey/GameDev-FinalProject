@@ -130,6 +130,7 @@ public class MoveManager : MonoBehaviour
         return ret;
     }
 
+/*
     public Boolean checkPlayerMoveAttack(){
         int[] p_coords = findPlayerOnBoard();
         int p_x = p_coords[0];
@@ -141,7 +142,7 @@ public class MoveManager : MonoBehaviour
         }
         return ret;
     }
-
+*/
     public void enemyHaveTurn(Enemy enemy){
         currentEnemy = enemy;
         int[] p_coords = findPlayerOnBoard();

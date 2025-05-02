@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     public float overheadOffset = 0.5f;
 
     [Header("Attacks")]
-    public List<Attack> attacks = new List<Attack>();
+    public AttackManager attackManager;
 
     void Start()
     {
@@ -171,9 +171,13 @@ public class GameManager : MonoBehaviour
         if(playerTurn == true){
             playerInputHandler.processNumberClicks();
             //playerInputHandler.processMouseClicks();
-            playerInputHandler.processArrowClicks();
+            int attackDirection = playerInputHandler.processArrowClicks();
             Boolean didMove = playerInputHandler.processKeyClicks();
             if(didMove){
+                StartCoroutine(SwitchTurnStagger());
+            }
+            if(attackDirection != -1){
+                attackManager.addNewAttack(player.transform.position, attackDirection, 'P');
                 StartCoroutine(SwitchTurnStagger());
             }
         }
@@ -192,19 +196,9 @@ public class GameManager : MonoBehaviour
 
     public void doAttackTurn(){
         if(attackTurn == true){
-            for(int i = 0; i < attacks.Count; i++){
-                Attack currAttack = attacks[i];
-                Boolean success = currAttack.updateAttack();
-                if(success == false){
-                    Debug.Log("Destroy attack");
-                }
-            }
+            attackManager.updatePlayerAttacks();
             StartCoroutine(SwitchTurnStagger());
         }
-    }
-
-    public void changeTurn(){
-        
     }
 
     IEnumerator SwitchTurnStagger(){
