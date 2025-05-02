@@ -639,6 +639,7 @@ MonoBehaviour:
   GameCamera: {fileID: 330585545}
   playerTurn: 0
   enemyTurn: 0
+  attackTurn: 0
   turnStaggerTime: 0.25
   moveManager: {fileID: 1185496789}
   currentLevel: 0
@@ -661,6 +662,8 @@ MonoBehaviour:
   enemyCanvases: []
   HealthBarDisplayPrefab: {fileID: 4114110545177102895, guid: 173ba1f5b57fe934cb69209ecc5c1af5, type: 3}
   overheadOffset: 0.5
+  attacks:
+  - {fileID: 1229609951}
 --- !u!1 &1124878661
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,6 +737,64 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.5117626, y: -2.2164717, z: 10.066236}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1229609950
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1229609952}
+  - component: {fileID: 1229609951}
+  m_Layer: 0
+  m_Name: Attack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1229609951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229609950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f6a33a3cf2ae448be6bd9d0c297d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WarningBoxPrefab: {fileID: 8201072015451798167, guid: 6777343111efb1143a5f3fb114ac65ab, type: 3}
+  AttackBoxPrefab: {fileID: 5771783375274016631, guid: 6ab6847a3c1376e48988b8f7cd0bb4a3, type: 3}
+  counter: 0
+  duration: 2
+  warning: 1
+  travel: 0
+  damage: 0
+  location: {x: 3, y: 0, z: 3}
+  direction: -1
+  scale: 3
+  xRest: 9
+  zRest: 9
+  CurrentBox: {fileID: 0}
+  currSpaces: []
+--- !u!4 &1229609952
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229609950}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.21791014, y: 0.95367706, z: 0.058542456}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1340,3 +1401,4 @@ SceneRoots:
   - {fileID: 1387379528}
   - {fileID: 1423507290}
   - {fileID: 1985410874}
+  - {fileID: 1229609952}

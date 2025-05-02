@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [Header("Turns and Moves")]
     public Boolean playerTurn;
     public Boolean enemyTurn;
+    public Boolean attackTurn;
     public float turnStaggerTime = 2f;
     public MoveManager moveManager;
 
@@ -53,7 +54,8 @@ public class GameManager : MonoBehaviour
     public GameObject HealthBarDisplayPrefab;
     public float overheadOffset = 0.5f;
 
-   
+    [Header("Attacks")]
+    public List<Attack> attacks = new List<Attack>();
 
     void Start()
     {
@@ -71,6 +73,7 @@ public class GameManager : MonoBehaviour
         displayEnemyHealthBars();
         doPlayerTurn();
         doEnemyTurn();
+        doAttackTurn();
     }
 
     public void loadLevel(int level){
@@ -187,6 +190,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void doAttackTurn(){
+        if(attackTurn == true){
+            for(int i = 0; i < attacks.Count; i++){
+                Attack currAttack = attacks[i];
+                Boolean success = currAttack.updateAttack();
+                if(success == false){
+                    Debug.Log("Destroy attack");
+                }
+            }
+            StartCoroutine(SwitchTurnStagger());
+        }
+    }
+
     public void changeTurn(){
         
     }
@@ -197,11 +213,15 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(turnStaggerTime);
             enemyTurn = true;
             //Debug.Log("EnemyTurnStart");
-        } else {
+        } else if (enemyTurn) {
             enemyTurn = false;
             yield return new WaitForSeconds(turnStaggerTime);
-            playerTurn = true;
+            attackTurn = true;
             //Debug.Log("PlayerTurnStart");
+        } else if (attackTurn) {
+            attackTurn = false;
+            yield return new WaitForSeconds(turnStaggerTime);
+            playerTurn = true;
         }
     }
 }
