@@ -5,6 +5,7 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 using System;
+using Unity.VisualScripting;
 public class AttackManager : MonoBehaviour
 {
     public Attack DefaultAttackPrefab;
@@ -45,6 +46,41 @@ public class AttackManager : MonoBehaviour
         parentList.Add(newAttack);
     }
 
+    public void removeAttack(Attack attack){
+        List<Attack> ownerList = attackOwner(attack);
+        if(ownerList.Count == 0){
+            return;
+        }
+        int index = -1;
+        for(int i = 0; i < ownerList.Count; i++){
+            if(ownerList[i] == attack){
+                index = i;
+                //print("Found in list");
+            }
+        }
+        Attack attackRemoving = ownerList[index];
+        attackRemoving.destoryCurrSpaces();
+        //Attack attackRemoving = ownerList.Find(attack); 
+        ownerList.Remove(attackRemoving);
+        Destroy(attackRemoving);
+    }
+
+    public List<Attack> attackOwner(Attack attack){
+        int ownerInt = -1;
+        if(playerAttacks.Contains(attack)){
+            ownerInt = 0;
+        } else if(enemyAttacks.Contains(attack)){
+            ownerInt = 1;
+        }
+        if(ownerInt == 0){
+            return playerAttacks;
+        } else if(ownerInt == 1){
+            return enemyAttacks;
+        } else {
+            return new List<Attack>();;
+        }
+    }
+
     public void updatePlayerAttacks(){
         for(int i = 0; i < playerAttacks.Count; i++){
             Attack currAttack = playerAttacks[i];
@@ -56,7 +92,6 @@ public class AttackManager : MonoBehaviour
             }
         }
     }
-
 
     public Vector3 getBoardDirection(int direction){
         Vector3 ret;

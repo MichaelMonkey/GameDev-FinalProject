@@ -7,4 +7,13 @@ public class ScreenHandler : MonoBehaviour
     public void StartGame(){
         SceneManager.LoadScene("GameScene");
     }
+
+    public void QuitGame(){
+        Debug.Log("Quitting Game");
+        Application.Quit();
+    }
+
+    public void OptionsMenu(){
+
+    }
 }

@@ -9,6 +9,7 @@ TagManager:
   - Trap
   - Exit
   - Gate
+  - AttackBox
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - IgnoreCollisionsPlayer
   - 
   - 
   - 

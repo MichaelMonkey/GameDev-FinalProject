@@ -23,13 +23,15 @@ public class Player : MonoBehaviour
     public Vector3 previousDirection = new Vector3(0, 0, 0);
     public MoveManager moveManager;
     
-    [Header("Keys")]
+    [Header("Collectibles and Collisions")]
     public int keysCollected = 0;
+    public int processingCollision = 0;
 
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip pickupSound;
-    public AudioClip bumpSound;
+    public AudioClip moveSound;
+    public AudioClip hurtSound;
     public AudioClip deathSound;
     public AudioClip winSound;
 
@@ -38,6 +40,7 @@ public class Player : MonoBehaviour
     public Vector3 cameraOffset = new Vector3(6, 12, 0);
     Boolean playing = true;
     public Boolean turn = true;
+
 
     void Start()
     {
@@ -89,7 +92,21 @@ public class Player : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("hit! "+other.gameObject.tag);
+        GameObject touched = other.gameObject;
+        print(other.gameObject.tag);
+        if(processingCollision > 0){
+            //Debug.Log("hit! "+other.gameObject.tag);
+            if(touched.CompareTag("AttackBox")){
+                Attack attack = touched.transform.parent.ConvertTo<Attack>();
+                hurtEvent(attack.damage);
+                moveManager.gameManager.attackManager.removeAttack(attack);
+                Destroy(attack);
+                //print("AttackBox removed and destroyed");
+            }
+            processingCollision = 0;
+        } else {
+            processingCollision += 1;
+        }
         /*if(other.gameObject.CompareTag("Key")){
             pickupEvent();
             Destroy(other.gameObject);
@@ -113,6 +130,21 @@ public class Player : MonoBehaviour
             StartCoroutine(DeathEvent());
         }*/
     }
+
+    void hurtEvent(int damage){
+        currentHealth -= damage;
+        if(currentHealth <= 0){
+            deathEvent();
+        } else {
+            audioSource.resource = hurtSound;
+            audioSource.Play();
+        }
+    }
+
+    void deathEvent(){
+
+    }
+
 /*
     void pickupEvent(){
         audioSource.resource = pickupSound;

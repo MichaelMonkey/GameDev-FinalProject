@@ -238,7 +238,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!20 &330585545
 Camera:
   m_ObjectHideFlags: 0
@@ -693,8 +693,6 @@ MonoBehaviour:
   enemyCanvases: []
   HealthBarDisplayPrefab: {fileID: 4114110545177102895, guid: 173ba1f5b57fe934cb69209ecc5c1af5, type: 3}
   overheadOffset: 0.5
-  attacks:
-  - {fileID: 0}
   attackManager: {fileID: 1139543747}
 --- !u!1 &1124878661
 GameObject:
@@ -1095,13 +1093,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 560887088578250487, guid: e348bd8413264ea4484d89b26750057c, type: 3}
+      propertyPath: hurtSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 816353a5055caf44f8e5766014d97a04, type: 3}
+    - target: {fileID: 560887088578250487, guid: e348bd8413264ea4484d89b26750057c, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 560887088578250487, guid: e348bd8413264ea4484d89b26750057c, type: 3}
+      propertyPath: moveSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 695138cf431f1d347ab901e110a0cc73, type: 3}
+    - target: {fileID: 560887088578250487, guid: e348bd8413264ea4484d89b26750057c, type: 3}
       propertyPath: moveManager
       value: 
       objectReference: {fileID: 1185496789}
+    - target: {fileID: 560887088578250487, guid: e348bd8413264ea4484d89b26750057c, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: ac583b46f2834204086401e572de14bb, type: 3}
     - target: {fileID: 560887088578250487, guid: e348bd8413264ea4484d89b26750057c, type: 3}
       propertyPath: playerSpeed
       value: 3
@@ -1145,6 +1155,10 @@ PrefabInstance:
     - target: {fileID: 1568681165145129628, guid: e348bd8413264ea4484d89b26750057c, type: 3}
       propertyPath: m_Name
       value: PlayerPiece
+      objectReference: {fileID: 0}
+    - target: {fileID: 2087386749896827085, guid: e348bd8413264ea4484d89b26750057c, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2201912333031315494, guid: e348bd8413264ea4484d89b26750057c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1190,10 +1204,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3820366585892662821, guid: e348bd8413264ea4484d89b26750057c, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7949007441683380153, guid: e348bd8413264ea4484d89b26750057c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: c38ea3ade2cc20a46811d59a67f38474, type: 2}
+    - target: {fileID: 8791818798988588120, guid: e348bd8413264ea4484d89b26750057c, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 4535858312089629970, guid: 29a112ce5b7d6d447a3f71ca186ba52a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
