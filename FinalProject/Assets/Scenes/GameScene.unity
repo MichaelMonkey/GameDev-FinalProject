@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 124320727}
   - component: {fileID: 124320726}
   m_Layer: 0
-  m_Name: PostProcessingLoader
+  m_Name: PlayerPrefsLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -211,6 +211,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volume: {fileID: 1474443993}
+  difficultySetting: 0
+  playerHealthMult: 0
+  playerWarning: 0
+  enemyHealthMult: 0
+  enemyWarning: 0
 --- !u!4 &124320727
 Transform:
   m_ObjectHideFlags: 0
@@ -714,8 +719,9 @@ MonoBehaviour:
   globalRight: {x: 0, y: 0, z: 1}
   GameCamera: {fileID: 330585545}
   playerTurn: 0
+  playerAttackTurn: 0
   enemyTurn: 0
-  attackTurn: 0
+  enemyAttackTurn: 0
   turnStaggerTime: 0.1
   moveManager: {fileID: 1185496789}
   currentLevel: 0
@@ -739,6 +745,11 @@ MonoBehaviour:
   HealthBarDisplayPrefab: {fileID: 4114110545177102895, guid: 173ba1f5b57fe934cb69209ecc5c1af5, type: 3}
   overheadOffset: 0.5
   attackManager: {fileID: 1139543747}
+  playerPrefsLoader: {fileID: 124320726}
+  playerHealthMult: 0
+  playerWarning: 0
+  enemyHealthMult: 0
+  enemyWarning: 0
 --- !u!1 &1124878661
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,6 +816,8 @@ MonoBehaviour:
   enemyAttacks: []
   PlayerAttacks: {fileID: 0}
   EnemyAttacks: {fileID: 0}
+  playerWarning: 0
+  enemyWarning: 0
 --- !u!4 &1139543748
 Transform:
   m_ObjectHideFlags: 0
@@ -1564,6 +1577,8 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
+  - {fileID: 1474443994}
+  - {fileID: 124320727}
   - {fileID: 1112280775}
   - {fileID: 331941053}
   - {fileID: 1185496790}
@@ -1579,5 +1594,3 @@ SceneRoots:
   - {fileID: 1423507290}
   - {fileID: 1985410874}
   - {fileID: 1139543748}
-  - {fileID: 1474443994}
-  - {fileID: 124320727}

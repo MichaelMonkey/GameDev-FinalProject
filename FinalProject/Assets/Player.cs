@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         GameObject touched = other.gameObject;
-        print(other.gameObject.tag);
+        //print(other.gameObject.tag);
         if(processingCollision > 0){
             //Debug.Log("hit! "+other.gameObject.tag);
             if(touched.CompareTag("AttackBox")){

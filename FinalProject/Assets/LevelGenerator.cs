@@ -72,16 +72,18 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    public List<Enemy> generateEnemies(char[,] levelBoard, int boardSizeX, int boardSizeZ){
+    public List<Enemy> generateEnemies(char[,] levelBoard, int boardSizeX, int boardSizeZ, int enemyHealthMult){
         List<Enemy> enemies = new List<Enemy>();
         for(int x = 0; x < boardSizeX; x++){
             for(int z = 0; z < boardSizeZ; z++){
                 if(levelBoard[x,z] == 'p'){
                     int xPosition = 0 + x*tileScale;
                     int zPosition = 0 + z*tileScale;
-                    Enemy newEnemyPawn = Instantiate(EnemyPawnPrefab, new Vector3(xPosition, enemyPawnYOffset, zPosition), Quaternion.identity, EnemyPieces).ConvertTo<Enemy>();
-                    newEnemyPawn.enemyType = 'p';
-                    enemies.Add(newEnemyPawn);
+                    Enemy newEnemy = Instantiate(EnemyPawnPrefab, new Vector3(xPosition, enemyPawnYOffset, zPosition), Quaternion.identity, EnemyPieces).ConvertTo<Enemy>();
+                    newEnemy.enemyType = 'p';
+                    newEnemy.maxHealth *= enemyHealthMult;
+                    newEnemy.currentHealth *= enemyHealthMult;
+                    enemies.Add(newEnemy);
                     //Renderer tileRender = newTile.GetComponent<Renderer>();
                     //tileRender.material = TileMaterial;
                     //tileRender.material.color = tileColor;

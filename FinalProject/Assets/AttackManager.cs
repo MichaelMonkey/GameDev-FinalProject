@@ -19,6 +19,10 @@ public class AttackManager : MonoBehaviour
     [Header("Attack Groupings")]
     public GameObject PlayerAttacks;
     public GameObject EnemyAttacks;
+    [Header("Difficulty Effects")]
+    public int playerWarning;
+    public int enemyWarning;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -48,12 +52,12 @@ public class AttackManager : MonoBehaviour
     public Attack genericAttack(Vector3 startLocation, GameObject parent, int direction, char source){
         Attack genericAttack = Instantiate(DefaultAttackPrefab, startLocation, Quaternion.identity, parent.transform);
         if(source == 'P'){ 
-            genericAttack.setup(startLocation, direction, 1, 1, 1, 2);
+            genericAttack.setup(startLocation, direction, 1, 1*playerWarning, 1, 2);
             //location, direction, duration, warning, travel, damage
         } else if (source == 'p'){
-            genericAttack.setup(startLocation, direction, 1, 1, 0, 2);
+            genericAttack.setup(startLocation, direction, 1, 1*enemyWarning, 0, 2);
         } else {
-            genericAttack.setup(startLocation, direction, 1, 0, 0, 1);
+            genericAttack.setup(startLocation, direction, 1, 0*enemyWarning, 0, 1);
         }
         return genericAttack;
     }

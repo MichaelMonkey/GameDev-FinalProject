@@ -58,10 +58,25 @@ public class GameManager : MonoBehaviour
     [Header("Attacks")]
     public AttackManager attackManager;
 
+    [Header("Data")]
+    public PlayerPrefsLoader playerPrefsLoader;
+    public int playerHealthMult;
+    public int playerWarning;
+    public int enemyHealthMult;
+    public int enemyWarning;
+
     void Start()
     {
+        playerHealthMult = playerPrefsLoader.playerHealthMult;
+        playerWarning = playerPrefsLoader.playerWarning;
+        enemyHealthMult = playerPrefsLoader.enemyHealthMult;
+        enemyWarning = playerPrefsLoader.enemyWarning;
+        attackManager.playerWarning = playerWarning;
+        attackManager.enemyWarning = enemyWarning;
         loadLevel(0);
-        playerHealthDisplay.intializeHealthBar(player.maxHealth, PlayerBarPrefab, PlayerBarFaded, PlayerBarActive, player.transform.position);
+        player.maxHealth *= playerHealthMult;
+        player.currentHealth = player.maxHealth;
+        playerHealthDisplay.intializeHealthBar(player.maxHealth, PlayerBarPrefab, PlayerBarFaded, PlayerBarActive, player.transform.position, playerHealthMult);
         initEnemyHealthBarDisplays();
     }
 
@@ -82,7 +97,7 @@ public class GameManager : MonoBehaviour
         generateLevelBoard(level);
         levelGenerator.setColors(level);
         levelGenerator.generateLevelTiles(levelBoard, boardSizeX, boardSizeZ);
-        enemies = levelGenerator.generateEnemies(levelBoard, boardSizeX, boardSizeZ);
+        enemies = levelGenerator.generateEnemies(levelBoard, boardSizeX, boardSizeZ, enemyHealthMult);
         currentLevel = level;
     }
 
@@ -125,7 +140,7 @@ public class GameManager : MonoBehaviour
         GameObject newBarDisplay = Instantiate(HealthBarDisplayPrefab, new Vector3(0, 0, 0), Quaternion.identity, newEnemyCanvas.transform);
         newBarDisplay.transform.localPosition = Vector3.zero;
         HealthBarDisplay newHealthBarDisplay = newBarDisplay.ConvertTo<HealthBarDisplay>();
-        newHealthBarDisplay.intializeHealthBar(enemy.maxHealth, EnemyBarPrefab, EnemyBarFaded, EnemyBarActive, new Vector3(0, 0, 0));
+        newHealthBarDisplay.intializeHealthBar(enemy.maxHealth, EnemyBarPrefab, EnemyBarFaded, EnemyBarActive, new Vector3(0, 0, 0), enemyHealthMult);
         newHealthBarDisplay.transform.localPosition = new Vector3(0, overheadOffset, 0);
         enemyHealthBars.Add(newHealthBarDisplay);
        /* Vector3 enemyPosition = enemy.transform.position;

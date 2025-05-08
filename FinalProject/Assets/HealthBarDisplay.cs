@@ -26,7 +26,7 @@ public class HealthBarDisplay : MonoBehaviour
         
     }
 
-    public void intializeHealthBar(int maxHealth, GameObject barPrefab, Color fadedC, Color activeC, Vector3 position){
+    public void intializeHealthBar(int maxHealth, GameObject barPrefab, Color fadedC, Color activeC, Vector3 position, int rescale){
         BarPrefab = barPrefab;
         fadedColor = fadedC;
         activeColor = activeC;
@@ -37,6 +37,8 @@ public class HealthBarDisplay : MonoBehaviour
             barPosition.z = 0;
             newBar.GetComponent<RectTransform>().position = barPosition;
             */newBar.transform.localPosition = Vector3.zero;
+            newBar.transform.localScale = new Vector3(1.25f/rescale, 1, 1);
+            //newBar.transform.x /= 2;
             bars[i] = newBar;
         }
     }
