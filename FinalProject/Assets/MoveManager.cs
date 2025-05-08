@@ -143,6 +143,22 @@ public class MoveManager : MonoBehaviour
         return ret;
     }
 */
+    
+    public int attackDirection(int[] direction){
+        int x_dir = direction[0];
+        int z_dir = direction[1];
+        if(z_dir == -1){
+            return 4;
+        } else if (z_dir == 1){
+            return 2;
+        } else if (x_dir == -1){
+            return 1;
+        } else if (x_dir == 1){
+            return 3;
+        } else {
+            return 0;
+        }
+    }
     public void enemyHaveTurn(Enemy enemy){
         currentEnemy = enemy;
         int[] p_coords = findPlayerOnBoard();
@@ -151,10 +167,13 @@ public class MoveManager : MonoBehaviour
         int[] e_coords = findEnemyOnBoard();
         int e_x = e_coords[0];
         int e_z = e_coords[1];
-        Debug.Log("Enemy on board at [x,z]: "+ e_x+","+e_z);
+        //Debug.Log("Enemy on board at [x,z]: "+ e_x+","+e_z);
         if(playerWithinEnemyRange()){
-            Debug.Log("Attacked player on board at [x,z]: "+ p_x+","+ p_z);
-            damagePlayer(1);
+            int direction = attackDirection(GetDirection(e_x, e_z, p_x, p_z));
+            AttackManager attackManager = gameManager.attackManager;
+            attackManager.addNewAttack(enemy.transform.position, direction, enemy.enemyType);
+            //Debug.Log("Attacked player on board at [x,z]: "+ p_x+","+ p_z);
+            //damagePlayer(1);
         }
         //int[] move = new int[] {0, 0};
         /*int[,] attackMoves = getListOfLegalEnemyAttackMoves(e_x, e_z);

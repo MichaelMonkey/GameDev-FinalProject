@@ -20,8 +20,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Turns and Moves")]
     public Boolean playerTurn;
+    public Boolean playerAttackTurn;
     public Boolean enemyTurn;
-    public Boolean attackTurn;
+    public Boolean enemyAttackTurn;
     public float turnStaggerTime = 2f;
     public MoveManager moveManager;
 
@@ -59,11 +60,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
         loadLevel(0);
         playerHealthDisplay.intializeHealthBar(player.maxHealth, PlayerBarPrefab, PlayerBarFaded, PlayerBarActive, player.transform.position);
         initEnemyHealthBarDisplays();
-        
     }
 
     // Update is called once per frame
@@ -72,8 +71,9 @@ public class GameManager : MonoBehaviour
         playerHealthDisplay.displayHealthBar(player.maxHealth, player.currentHealth/*, player.transform.position*/);
         displayEnemyHealthBars();
         doPlayerTurn();
+        doPlayerAttackTurn();
         doEnemyTurn();
-        doAttackTurn();
+        doEnemyAttackTurn();
     }
 
     public void loadLevel(int level){
@@ -183,6 +183,12 @@ public class GameManager : MonoBehaviour
         }
         //playerInputHandler.processMouseClicks();
     }
+    public void doPlayerAttackTurn(){
+        if(playerAttackTurn == true){
+            attackManager.updatePlayerAttacks();
+            StartCoroutine(SwitchTurnStagger());
+        }
+    }
 
     public void doEnemyTurn(){
         if(enemyTurn == true){
@@ -194,9 +200,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void doAttackTurn(){
-        if(attackTurn == true){
-            attackManager.updatePlayerAttacks();
+    public void doEnemyAttackTurn(){
+        if(enemyAttackTurn == true){
+            attackManager.updateEnemyAttacks();
             StartCoroutine(SwitchTurnStagger());
         }
     }
@@ -205,15 +211,17 @@ public class GameManager : MonoBehaviour
         if(playerTurn){
             playerTurn = false;
             yield return new WaitForSeconds(turnStaggerTime);
+            playerAttackTurn = true;
+        } else if (playerAttackTurn){
+            playerAttackTurn = false;
+            yield return new WaitForSeconds(turnStaggerTime);
             enemyTurn = true;
-            //Debug.Log("EnemyTurnStart");
         } else if (enemyTurn) {
             enemyTurn = false;
             yield return new WaitForSeconds(turnStaggerTime);
-            attackTurn = true;
-            //Debug.Log("PlayerTurnStart");
-        } else if (attackTurn) {
-            attackTurn = false;
+            enemyAttackTurn = true;
+        } else if (enemyAttackTurn) {
+            enemyAttackTurn = false;
             yield return new WaitForSeconds(turnStaggerTime);
             playerTurn = true;
         }

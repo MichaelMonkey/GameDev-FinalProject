@@ -6,6 +6,7 @@ using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.Animations;
 public class AttackManager : MonoBehaviour
 {
     public Attack DefaultAttackPrefab;
@@ -40,10 +41,21 @@ public class AttackManager : MonoBehaviour
             parentList = playerAttacks;
         }
         Vector3 startLocation = location + (gameScale * getBoardDirection(direction));
-        Attack newAttack = Instantiate(DefaultAttackPrefab, startLocation, Quaternion.identity, parent.transform);
-        newAttack.setup(startLocation, direction, 2, 1, 1, 2);
-        //location, direction, duration, warning, travel, damage
+        Attack newAttack = genericAttack(startLocation, parent, direction, source);
         parentList.Add(newAttack);
+    }
+
+    public Attack genericAttack(Vector3 startLocation, GameObject parent, int direction, char source){
+        Attack genericAttack = Instantiate(DefaultAttackPrefab, startLocation, Quaternion.identity, parent.transform);
+        if(source == 'P'){ 
+            genericAttack.setup(startLocation, direction, 1, 1, 1, 2);
+            //location, direction, duration, warning, travel, damage
+        } else if (source == 'p'){
+            genericAttack.setup(startLocation, direction, 1, 1, 0, 2);
+        } else {
+            genericAttack.setup(startLocation, direction, 1, 0, 0, 1);
+        }
+        return genericAttack;
     }
 
     public void removeAttack(Attack attack){
@@ -87,6 +99,18 @@ public class AttackManager : MonoBehaviour
             Boolean success = currAttack.updateAttack();
             if(success == false){
                 playerAttacks.Remove(currAttack);
+                Destroy(currAttack);
+                i--;
+            }
+        }
+    }
+
+    public void updateEnemyAttacks(){
+        for(int i = 0; i < enemyAttacks.Count; i++){
+            Attack currAttack = enemyAttacks[i];
+            Boolean success = currAttack.updateAttack();
+            if(success == false){
+                enemyAttacks.Remove(currAttack);
                 Destroy(currAttack);
                 i--;
             }

@@ -79,8 +79,9 @@ public class LevelGenerator : MonoBehaviour
                 if(levelBoard[x,z] == 'p'){
                     int xPosition = 0 + x*tileScale;
                     int zPosition = 0 + z*tileScale;
-                    GameObject newEnemyPawn = Instantiate(EnemyPawnPrefab, new Vector3(xPosition, enemyPawnYOffset, zPosition), Quaternion.identity, EnemyPieces);
-                    enemies.Add(newEnemyPawn.ConvertTo<Enemy>());
+                    Enemy newEnemyPawn = Instantiate(EnemyPawnPrefab, new Vector3(xPosition, enemyPawnYOffset, zPosition), Quaternion.identity, EnemyPieces).ConvertTo<Enemy>();
+                    newEnemyPawn.enemyType = 'p';
+                    enemies.Add(newEnemyPawn);
                     //Renderer tileRender = newTile.GetComponent<Renderer>();
                     //tileRender.material = TileMaterial;
                     //tileRender.material.color = tileColor;

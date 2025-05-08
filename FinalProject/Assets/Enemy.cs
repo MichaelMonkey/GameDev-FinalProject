@@ -4,6 +4,15 @@ using Random = UnityEngine.Random;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
+/*
+using UnityEngine.SceneManagement;
+using UnityEditor.Callbacks;
+using System.Collections;
+using Unity.Cinemachine;
+using System.Runtime.CompilerServices;
+using System.Linq;
+*/
+using Unity.VisualScripting;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,7 +20,12 @@ public class Enemy : MonoBehaviour
     public int maxHealth = 3;
     public int currentHealth = 3;
     public float enemySpeed = 3f;
+    public char enemyType = 'p';
 
+    public int processingCollision = 0;
+    public MoveManager moveManager;
+    public GameObject temp;
+    //public Attack storeAttack;
     /*
     [Header("Enemy Types")]
     public GameObject[] tester;
@@ -19,7 +33,7 @@ public class Enemy : MonoBehaviour
 */
     void Start()
     {
-        
+        moveManager = GameObject.Find("MoveManager").ConvertTo<MoveManager>();
     }
 
     void Update()
@@ -50,5 +64,27 @@ public class Enemy : MonoBehaviour
             retDirection += globalRight;
         }
         return retDirection;
+    }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        GameObject touched = other.gameObject;
+        //print(other.gameObject.tag);
+        if(processingCollision > 0){
+            processingCollision = 0;
+            //Debug.Log("hit! "+other.gameObject.tag);
+            if(touched.CompareTag("AttackBox")){
+                Attack attack = touched.transform.parent.ConvertTo<Attack>();
+                //storeAttack = attack;
+                currentHealth -= attack.damage;
+                //hurtEvent(attack.damage);
+                moveManager.gameManager.attackManager.removeAttack(attack);
+                Destroy(attack);
+                //print("AttackBox removed and destroyed");
+            }
+        } else {
+            processingCollision += 1;
+        }
     }
 }
