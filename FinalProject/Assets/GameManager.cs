@@ -132,6 +132,42 @@ public class GameManager : MonoBehaviour
             levelBoard[2,3] = 'p';
             levelBoard[3,2] = 'p';
             levelBoard[5,8] = 'p';
+        } else if (level == 2) {
+            boardSizeX = 8;
+            boardSizeZ = 3;
+            char[,] board = new char[boardSizeX, boardSizeZ]; 
+            for(int x = 0; x < boardSizeX; x++){
+                for(int z = 0; z < boardSizeZ; z++){
+                    board[x,z] = '.';
+                }
+            }
+            levelBoard = board;
+            levelBoard[0,0] = 'P';
+            levelBoard[0,1] = '#';
+            levelBoard[1,1] = '#';
+            levelBoard[2,1] = '#';
+            levelBoard[1,1] = '#';
+            levelBoard[4,1] = '#';
+            levelBoard[5,1] = '#';
+            levelBoard[7,1] = '#';
+            levelBoard[7,2] = 'p';
+            levelBoard[6,1] = 'p';
+        }else if(level == 3){
+            boardSizeX = 5;
+            boardSizeZ = 5;
+            char[,] board = new char[boardSizeX, boardSizeZ]; 
+            for(int x = 0; x < boardSizeX; x++){
+                for(int z = 0; z < boardSizeZ; z++){
+                    board[x,z] = '.';
+                }
+            }
+            levelBoard = board;
+            levelBoard[0,0] = 'P';
+            levelBoard[0,1] = '#';
+            levelBoard[1,1] = '#';
+            levelBoard[3,3] = 'p';
+            levelBoard[3,4] = 'p';
+            levelBoard[4,3] = 'p';
         } else {
             boardSizeX = 6;
             boardSizeZ = 4;
