@@ -42,6 +42,10 @@ public class GridSelector : MonoBehaviour
         Teleport(new Vector3(-100, 0, -100));
     }
 
+    public void Reappear(){
+        Teleport(Vector3.zero);
+    }
+
     public void setColor(int set){
         if(set > colors.Length){
             return;

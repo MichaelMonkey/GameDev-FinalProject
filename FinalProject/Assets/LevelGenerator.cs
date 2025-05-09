@@ -46,6 +46,16 @@ public class LevelGenerator : MonoBehaviour
             tileSat = 0.9f;
             tileVLight = 1f;
             tileVDark = 0.8f;
+        } else if(level == 2){
+            tileHue = 0.77f;
+            tileSat = 0.9f;
+            tileVLight = 1f;
+            tileVDark = 0.8f;
+        } else if(level == 3){
+            tileHue = 0.33f;
+            tileSat = 0.9f;
+            tileVLight = 1f;
+            tileVDark = 0.8f;
         } else {
             tileHue = 0f;
             tileSat = 0f;

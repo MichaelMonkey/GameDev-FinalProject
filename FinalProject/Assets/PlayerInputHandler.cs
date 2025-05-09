@@ -23,7 +23,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
     }
 
-    public Boolean processKeyClicks(){
+    public Boolean processMovementClicks(){
         if(isAttacking()){
             return false;
         }
@@ -59,7 +59,8 @@ public class PlayerInputHandler : MonoBehaviour
             //player.revertPosition();
             player.returnToStartPosition();
         }
-        player.MoveWithCC(finalMovement, 1);
+        player.simpleMove(finalMovement);
+        //player.MoveWithCC(finalMovement, 1);
         return didMove;
     }
 
@@ -72,7 +73,7 @@ public class PlayerInputHandler : MonoBehaviour
          }
     }
     
-    public int processArrowClicks(){
+    public int processAttackClicks(){
         if(isMoving()){
             return -1;
         }
@@ -80,29 +81,30 @@ public class PlayerInputHandler : MonoBehaviour
         Vector3 selectorMovement = Vector3.zero;
         Vector3 globalBackward = new Vector3(1, 0, 0);
         Vector3 globalRight = new Vector3(0, 0, 1);
-        if(Input.GetKeyDown(KeyCode.UpArrow)){
+        
+        if(Input.GetKeyDown(KeyCode.W)){
             selectorMovement -= globalBackward;
             gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed); 
             setDirection = 1;
         }
-        else if(Input.GetKeyDown(KeyCode.LeftArrow)){
+        else if(Input.GetKeyDown(KeyCode.A)){
             selectorMovement -= globalRight;
             gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed);
             setDirection = 4;
         }
-        else if(Input.GetKeyDown(KeyCode.DownArrow)){
+        else if(Input.GetKeyDown(KeyCode.S)){
             selectorMovement += globalBackward;
             gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed);
             setDirection = 3;
         }
-        else if(Input.GetKeyDown(KeyCode.RightArrow)){
+        else if(Input.GetKeyDown(KeyCode.D)){
             selectorMovement += globalRight;
             gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed);
             setDirection = 2;
         } else if (Input.GetKeyDown(KeyCode.Space)){
             if(setDirection != -1){
                 direction = setDirection;
-                gridSelector.Disappear();
+                //gridSelector.Disappear();
                 setDirection = -1;
             }
         }

@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [Header("Environment")]
     public Vector3 globalBackward = new Vector3(1, 0, 0);
     public Vector3 globalRight = new Vector3(0, 0, 1);
+    public int gameScale = 3;
 
     public Camera GameCamera;
 
@@ -214,8 +215,8 @@ public class GameManager : MonoBehaviour
         if(playerTurn == true){
             playerInputHandler.processNumberClicks();
             //playerInputHandler.processMouseClicks();
-            int attackDirection = playerInputHandler.processArrowClicks();
-            Boolean didMove = playerInputHandler.processKeyClicks();
+            int attackDirection = playerInputHandler.processAttackClicks();
+            Boolean didMove = playerInputHandler.processMovementClicks();
             if(didMove){
                 StartCoroutine(SwitchTurnStagger());
             }
@@ -279,6 +280,9 @@ public class GameManager : MonoBehaviour
                 enemies.Remove(currEnemy);
                 enemyCanvases.Remove(currCanvas);
                 enemyHealthBars.Remove(currHealthBar);
+                int old_x = (int)(currEnemy.transform.position.x / gameScale);
+                int old_z = (int)(currEnemy.transform.position.z / gameScale);
+                levelBoard[old_x,old_z] = '.';
                 Destroy(currEnemy.ConvertTo<GameObject>());
                 i--;
             }

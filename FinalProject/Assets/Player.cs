@@ -48,12 +48,33 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        ApplyGravityWithCC();
+        //ApplyGravityWithCC();
+    }
+
+    public void simpleMove(Vector3 direction){
+        moveCamera();
+        if(direction == Vector3.zero){
+            return;
+        }
+        CharacterController cc = GetComponent<CharacterController>();
+        int gameScale = moveManager.gameManager.gameScale;
+        Vector3 checkPosition = transform.position + direction*gameScale;
+        Boolean valid = moveManager.validSpace((int)(checkPosition.x/gameScale),(int)(checkPosition.z/gameScale));
+        if(valid){
+            cc.enabled = false;
+            transform.position = checkPosition;
+            transform.LookAt(transform.position + direction);
+            moveCamera();
+            cc.enabled = true;
+        }
     }
 
     public void MoveWithCC(Vector3 direction, int check){
         if(!playing){
             return;
+        }
+        if(direction != Vector3.zero){
+            print(direction);
         }
         CharacterController cc = GetComponent<CharacterController>();
         cc.Move(direction * playerSpeed);

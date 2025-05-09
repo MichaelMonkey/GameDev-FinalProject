@@ -50,13 +50,29 @@ public class MoveManager : MonoBehaviour
         }
     }
 
+    public Boolean validSpace(int x, int z){
+        //print("checking space: "+x+","+z);
+        if(OutOfBounds(x, z)){
+            //print("OOB");
+            return false;
+        } else if (gameManager.levelBoard[x,z] == '#'){
+            //print(gameManager.levelBoard[x,z]);
+            return false;
+        } else if (IsEnemy(x, z)){
+            return false;
+        } else {
+            //print("valid");
+            return true;
+        }
+    }
+
     public Boolean OutOfBounds(int x, int z){
         int boardSizeX = gameManager.boardSizeX;
         int boardSizeZ = gameManager.boardSizeZ;
         if((x < 0) || (x >= boardSizeX)){
             return true;
         }
-        if((x < 0) || (x >= boardSizeZ)){
+        if((z < 0) || (z >= boardSizeZ)){
             return true;
         }
         return false;
@@ -196,12 +212,6 @@ public class MoveManager : MonoBehaviour
         //int ret = -1;
     }
 
-    public void damagePlayer(int damage){
-        gameManager.player.currentHealth -= damage;
-        /*if(gameManager.player.currentHealth <= 0){
-            Destroy(gameManager.player);
-        }*/
-    }
 
     public Enemy findEnemyAt(int x, int z){
         for(int i = 0; i < gameManager.enemies.Count; i++){
@@ -213,13 +223,6 @@ public class MoveManager : MonoBehaviour
             }
         }
         return currentEnemy;
-    }
-
-    public void damageEnemy(Enemy enemy, int damage){
-        enemy.currentHealth -= damage;
-        /*if(enemy.currentHealth <= 0){
-            Destroy(enemy);
-        }*/
     }
     
     public Boolean playerWithinEnemyRange(){
