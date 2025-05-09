@@ -1600,6 +1600,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 560887088578250487, guid: e348bd8413264ea4484d89b26750057c, type: 3}
+      propertyPath: maxHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 560887088578250487, guid: e348bd8413264ea4484d89b26750057c, type: 3}
       propertyPath: moveSound
       value: 
       objectReference: {fileID: 8300000, guid: 695138cf431f1d347ab901e110a0cc73, type: 3}
@@ -1619,6 +1623,10 @@ PrefabInstance:
       propertyPath: cameraObject
       value: 
       objectReference: {fileID: 330585545}
+    - target: {fileID: 560887088578250487, guid: e348bd8413264ea4484d89b26750057c, type: 3}
+      propertyPath: currentHealth
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 560887088578250487, guid: e348bd8413264ea4484d89b26750057c, type: 3}
       propertyPath: healthDisplay
       value: 
@@ -1872,6 +1880,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ceb65da2ed8620e45b0de96a1f8a181c, type: 3}
   - {fileID: 8300000, guid: fd8ee73b561fc7249ae7a27cf2a49b65, type: 3}
   - {fileID: 8300000, guid: ac583b46f2834204086401e572de14bb, type: 3}
+  - {fileID: 8300000, guid: 71167e2d9b4e5c945808f332606ddb68, type: 3}
   SystemSounds:
   - {fileID: 8300000, guid: 89dffcef36360c54eb64757443ca84e4, type: 3}
   - {fileID: 8300000, guid: d8a0eadea6b9ce5409edb244270160f0, type: 3}

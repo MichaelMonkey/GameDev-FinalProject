@@ -347,6 +347,7 @@ public class GameManager : MonoBehaviour
         if((player.currentHealth <= 0) || (player.transform.position.y < -5)){
             soundBox.playSFX(3);
             establishLevel();
+            player.moveCamera();
         }
     }
 

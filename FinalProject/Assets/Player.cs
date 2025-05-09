@@ -14,8 +14,8 @@ using Unity.VisualScripting;
 public class Player : MonoBehaviour
 {
     [Header("Health")]
-    public int maxHealth = 10;
-    public int currentHealth = 10;
+    public int maxHealth = 5;
+    public int currentHealth = 5;
 
     [Header("Movement")]
     public float playerSpeed;
@@ -67,6 +67,8 @@ public class Player : MonoBehaviour
             moveManager.gameManager.soundBox.playSFX(0);
             moveCamera();
             cc.enabled = true;
+        } else {
+            moveManager.gameManager.soundBox.playSFX(5);
         }
     }
 
@@ -158,15 +160,9 @@ public class Player : MonoBehaviour
 
     void hurtEvent(int damage){
         currentHealth -= damage;
-        if(currentHealth <= 0){
-            deathEvent();
-        } else {
+        if(currentHealth > 0){
             moveManager.gameManager.soundBox.playSFX(1);
         }
-    }
-
-    void deathEvent(){
-
     }
 
     public void returnToStartPosition(){
