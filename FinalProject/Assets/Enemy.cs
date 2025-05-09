@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     public int currentHealth = 3;
     public float enemySpeed = 3f;
     public char enemyType = 'p';
+    public int enemyScore = 100;
 
     public int processingCollision = 0;
     public MoveManager moveManager;

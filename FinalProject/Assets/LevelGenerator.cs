@@ -30,6 +30,10 @@ public class LevelGenerator : MonoBehaviour
     public Transform EnemyPieces;
     public GameObject EnemyPawnPrefab;
     public float enemyPawnYOffset = 0f;
+    [Header("Healing Aura")]
+    public Transform HealingAuras;
+    public GameObject HealingAuraPrefab;
+    public List<GameObject> auras;
     void Start()
     {
     }
@@ -88,7 +92,31 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    public List<Enemy> generateEnemies(char[,] levelBoard, int boardSizeX, int boardSizeZ, int enemyHealthMult){
+    public char getEnemyType(int level){
+        if(level == 1){
+            return 'l';
+        } else if(level == 2){
+            return 'r';
+        } else if(level == 3){
+            return 'k';
+        } else {
+            return 'p';
+        }
+    }
+
+    public int getEnemyScore(int level){
+        if(level == 1){
+            return 150;
+        } else if(level == 2){
+            return 200;
+        } else if(level == 3){
+            return 350;
+        } else {
+            return 100;
+        }
+    }
+
+    public List<Enemy> generateEnemies(char[,] levelBoard, int boardSizeX, int boardSizeZ, int enemyHealthMult, int level){
         List<Enemy> enemies = new List<Enemy>();
         for(int x = 0; x < boardSizeX; x++){
             for(int z = 0; z < boardSizeZ; z++){
@@ -96,7 +124,8 @@ public class LevelGenerator : MonoBehaviour
                     int xPosition = 0 + x*tileScale;
                     int zPosition = 0 + z*tileScale;
                     Enemy newEnemy = Instantiate(EnemyPawnPrefab, new Vector3(xPosition, enemyPawnYOffset, zPosition), Quaternion.identity, EnemyPieces).ConvertTo<Enemy>();
-                    newEnemy.enemyType = 'p';
+                    newEnemy.enemyType = getEnemyType(level);
+                    newEnemy.enemyScore = getEnemyScore(level);
                     newEnemy.maxHealth *= enemyHealthMult;
                     newEnemy.currentHealth *= enemyHealthMult;
                     enemies.Add(newEnemy);
@@ -109,11 +138,24 @@ public class LevelGenerator : MonoBehaviour
         return enemies;
     }
 
-    public void generatePillar( int boardSizeX, int boardSizeZ){
+    public void generatePillar(int boardSizeX, int boardSizeZ){
         int xPosition = (boardSizeX-1)*tileScale;
         int zPosition = (boardSizeZ-1)*tileScale;
         pillar = Instantiate(PillarPrefab, new Vector3(xPosition, 0, zPosition), Quaternion.identity, Board);
         pillar.transform.rotation = Quaternion.Euler(-90, 0, 0);
+    }
+
+    public void generateAuras(char[,] levelBoard, int boardSizeX, int boardSizeZ){
+        for(int x = 0; x < boardSizeX; x++){
+            for(int z = 0; z < boardSizeZ; z++){
+                if(levelBoard[x,z] == '+'){
+                    int xPosition = 0 + x*tileScale;
+                    int zPosition = 0 + z*tileScale;
+                    GameObject newAura = Instantiate(HealingAuraPrefab, new Vector3(xPosition, 0, zPosition), Quaternion.identity, HealingAuras);
+                    auras.Add(newAura);
+                }
+            }
+        }
     }
 
     public void removeAllTiles(){
@@ -127,6 +169,15 @@ public class LevelGenerator : MonoBehaviour
 
     public void removePillar(){
         Destroy(pillar);
+    }
+
+    public void removeAllAuras(){
+        for(int i = 0; i < auras.Count; i++){
+            GameObject currAura = auras[i];
+            auras.Remove(currAura);
+            Destroy(currAura);
+            i--;
+        }
     }
 
 }

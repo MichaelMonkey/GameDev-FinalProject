@@ -231,6 +231,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &179682099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 179682100}
+  m_Layer: 0
+  m_Name: HealingAuras
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &179682100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179682099}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.564492, y: -52.16435, z: 29.506989}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &206661454
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,6 +602,9 @@ MonoBehaviour:
   EnemyPieces: {fileID: 122906683}
   EnemyPawnPrefab: {fileID: 3500068130066303066, guid: 9694ee59a4757f048a78f23bfa11009d, type: 3}
   enemyPawnYOffset: -0.3
+  HealingAuras: {fileID: 179682100}
+  HealingAuraPrefab: {fileID: 2591725257806553506, guid: 1d5349b0fb012d346805bac9a23d1eda, type: 3}
+  auras: []
 --- !u!4 &331941053
 Transform:
   m_ObjectHideFlags: 0
@@ -1881,6 +1915,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fd8ee73b561fc7249ae7a27cf2a49b65, type: 3}
   - {fileID: 8300000, guid: ac583b46f2834204086401e572de14bb, type: 3}
   - {fileID: 8300000, guid: 71167e2d9b4e5c945808f332606ddb68, type: 3}
+  - {fileID: 8300000, guid: 4d7f3a9868058c643b47822bcf7d2d31, type: 3}
   SystemSounds:
   - {fileID: 8300000, guid: 89dffcef36360c54eb64757443ca84e4, type: 3}
   - {fileID: 8300000, guid: d8a0eadea6b9ce5409edb244270160f0, type: 3}
@@ -2045,6 +2080,7 @@ SceneRoots:
   - {fileID: 1263846895}
   - {fileID: 1124878662}
   - {fileID: 122906683}
+  - {fileID: 179682100}
   - {fileID: 13925235}
   - {fileID: 206661455}
   - {fileID: 1248245881}

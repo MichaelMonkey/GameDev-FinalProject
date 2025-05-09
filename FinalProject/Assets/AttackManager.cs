@@ -55,7 +55,29 @@ public class AttackManager : MonoBehaviour
             genericAttack.setup(startLocation, direction, 1, 1*playerWarning, 1, 2);
             //location, direction, duration, warning, travel, damage
         } else if (source == 'p'){
-            genericAttack.setup(startLocation, direction, 1, 1*enemyWarning, 0, 2);
+            genericAttack.setup(startLocation, direction, 1, 1*enemyWarning, 0, 1);
+            
+        } else if (source == 'l'){
+            genericAttack.setup(startLocation, direction, 2, 1*enemyWarning+1, 2, 2);
+            
+        } else if (source == 'r'){
+            genericAttack.setup(startLocation, direction, 2, 1*enemyWarning+1, 3, 2);
+            List<int> sides = new List<int>();
+            List<int> lengths = new List<int>();
+            sides.Add(1);
+            lengths.Add(1);
+            genericAttack.sides = sides;
+            genericAttack.lengths = lengths;
+        } else if (source == 'k'){
+            genericAttack.setup(startLocation, direction, 1, 1*enemyWarning, 2, 3);
+            List<int> sides = new List<int>();
+            List<int> lengths = new List<int>();
+            sides.Add(2);
+            lengths.Add(1);
+            sides.Add(4);
+            lengths.Add(1);
+            genericAttack.sides = sides;
+            genericAttack.lengths = lengths;
         } else {
             genericAttack.setup(startLocation, direction, 1, 0*enemyWarning, 0, 1);
         }

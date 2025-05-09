@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 using System.Collections;
 using Unity.VisualScripting;
+using System.Runtime.InteropServices.WindowsRuntime;
 public class MoveManager : MonoBehaviour
 {
     public GameManager gameManager;
@@ -146,6 +147,19 @@ public class MoveManager : MonoBehaviour
         return ret;
     }
 
+    public Boolean WithinShiftXLine(int from_x, int to_x, int from_z, int to_z, int range, int shift){
+        Boolean tryOn = InXLine(from_x, to_x, from_z, to_z, range);
+        Boolean tryBefore = InXLine(from_x, to_x, from_z-1, to_z, range);
+        Boolean tryAfter = InXLine(from_x, to_x, from_z+1, to_z, range);
+        return tryOn || tryBefore || tryAfter;
+    }
+    public Boolean WithinShiftZLine(int from_x, int to_x, int from_z, int to_z, int range, int shift){
+        Boolean tryOn = InXLine(from_x, to_x, from_z, to_z, range);
+        Boolean tryBefore = InZLine(from_x-1, to_x, from_z, to_z, range);
+        Boolean tryAfter = InZLine(from_x+1, to_x, from_z, to_z, range);
+        return tryOn || tryBefore || tryAfter;
+    }
+
 /*
     public Boolean checkPlayerMoveAttack(){
         int[] p_coords = findPlayerOnBoard();
@@ -184,7 +198,7 @@ public class MoveManager : MonoBehaviour
         int e_x = e_coords[0];
         int e_z = e_coords[1];
         //Debug.Log("Enemy on board at [x,z]: "+ e_x+","+e_z);
-        if(playerWithinEnemyRange()){
+        if(playerWithinEnemyRange(enemy.enemyType)){
             int direction = attackDirection(GetDirection(e_x, e_z, p_x, p_z));
             AttackManager attackManager = gameManager.attackManager;
             attackManager.addNewAttack(enemy.transform.position, direction, enemy.enemyType);
@@ -225,19 +239,45 @@ public class MoveManager : MonoBehaviour
         return currentEnemy;
     }
     
-    public Boolean playerWithinEnemyRange(){
+    public Boolean playerWithinEnemyRange(char enemyType){
         int[] e_coords = findEnemyOnBoard();
         int e_x = e_coords[0];
         int e_z = e_coords[1];
         int[] p_coords = findPlayerOnBoard();
         int p_x = p_coords[0];
         int p_z = p_coords[1];
-        if(InZLine(e_x, p_x, e_z, p_z, 1)){
-            Debug.Log("EyesOnPlayer:ZLine!");
-            return true;
-        } else if (InXLine(e_x, p_x, e_z, p_z, 1)){
-            Debug.Log("EyesOnPlayer:XLine!");
-            return true;
+        if(enemyType == 'p'){
+            if(InZLine(e_x, p_x, e_z, p_z, 1)){
+                Debug.Log("EyesOnPlayer:ZLine!");
+                return true;
+            } else if (InXLine(e_x, p_x, e_z, p_z, 1)){
+                Debug.Log("EyesOnPlayer:XLine!");
+                return true;
+            }
+        } else if(enemyType == 'l'){
+            if(InZLine(e_x, p_x, e_z, p_z, 2)){
+                Debug.Log("EyesOnPlayer:ZLine!");
+                return true;
+            } else if (InXLine(e_x, p_x, e_z, p_z, 2)){
+                Debug.Log("EyesOnPlayer:XLine!");
+                return true;
+            }
+        } else if(enemyType == 'r'){
+            if(InZLine(e_x, p_x, e_z, p_z, 3)){
+                Debug.Log("EyesOnPlayer:ZLine!");
+                return true;
+            } else if (InXLine(e_x, p_x, e_z, p_z, 3)){
+                Debug.Log("EyesOnPlayer:XLine!");
+                return true;
+            }
+        } else if(enemyType == 'k'){
+            if(WithinShiftZLine(e_x, p_x, e_z, p_z, 2, 1)){
+                Debug.Log("EyesOnPlayer:ShiftZLine!");
+                return true;
+            } else if (WithinShiftXLine(e_x, p_x, e_z, p_z, 2, 1)){
+                Debug.Log("EyesOnPlayer:ShiftXLine!");
+                return true;
+            }
         }
         return false;
     }

@@ -1,7 +1,8 @@
 using System.Data;
 using System.Security.Cryptography;
 using UnityEngine;
-using System.Collections;using System.Numerics;
+using System.Collections;
+using System.Numerics;
 using Unity.VisualScripting;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
@@ -10,6 +11,7 @@ using UnityEngine.UI;
 using System.Linq.Expressions;
 using System;
 using UnityEditor.Rendering.Universal;
+using UnityEditor.Experimental.GraphView;
 
 public class Attack : MonoBehaviour
 {
@@ -26,7 +28,8 @@ public class Attack : MonoBehaviour
     int buffer = 1;
     public Vector3 location;
     public int direction = -1;
-    public int[][] sides;
+    public List<int> sides;
+    public List<int> lengths;
 
     [Header("Other")]
     public int xRest = 9;
@@ -57,6 +60,11 @@ public class Attack : MonoBehaviour
         } else {
             ret = new Vector3(0, 0, -1);
         }
+        return ret;
+    }
+
+    public int trueDirection(int direction, int side){
+        int ret = ((direction - 1 + side - 1)%4)+1;
         return ret;
     }
 
@@ -95,6 +103,15 @@ public class Attack : MonoBehaviour
     public List<Vector3> getAllSpaces(){
         List<Vector3> ret = new List<Vector3>();
         ret.Add(location);
+        for(int i = 0; i < sides.Count; i++){
+            int side = sides[i];
+            int length = lengths[i];
+            for(int l = 1; l < length+1; l++){
+                Vector3 shift = getBoardDirection(trueDirection(direction, side));
+                Vector3 sideLocation = location + l*shift*gameScale;
+                ret.Add(sideLocation);
+            }
+        }
         return ret;
     }
 

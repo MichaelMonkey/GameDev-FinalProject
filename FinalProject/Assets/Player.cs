@@ -130,6 +130,10 @@ public class Player : MonoBehaviour
             if (touched.CompareTag("Exit")){
                 moveManager.gameManager.nextLevel();
             }
+            if(touched.CompareTag("Health")){
+                healEvent(1);
+                Destroy(touched);
+            }
             processingCollision = 0;
         } else {
             processingCollision += 1;
@@ -163,6 +167,11 @@ public class Player : MonoBehaviour
         if(currentHealth > 0){
             moveManager.gameManager.soundBox.playSFX(1);
         }
+    }
+
+    void healEvent(int heal){
+        currentHealth = Math.Min(maxHealth, currentHealth+heal);
+        moveManager.gameManager.soundBox.playSFX(6);
     }
 
     public void returnToStartPosition(){
