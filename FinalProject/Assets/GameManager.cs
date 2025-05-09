@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System;
 using System.Collections;
 using UnityEditor.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -65,11 +66,14 @@ public class GameManager : MonoBehaviour
     public int playerWarning;
     public int enemyHealthMult;
     public int enemyWarning;
+    int gameScore = 0;
+    int levelScore = 0;
 
     public SoundBox soundBox;
 
     void Start()
     {
+        gameScore = 0;
         playerHealthMult = playerPrefsLoader.playerHealthMult;
         playerWarning = playerPrefsLoader.playerWarning;
         enemyHealthMult = playerPrefsLoader.enemyHealthMult;
@@ -180,7 +184,7 @@ public class GameManager : MonoBehaviour
             levelBoard[4,0] = 'p';
             levelBoard[4,3] = 'p';
             levelBoard[2,2] = '+';
-        } else {
+        } else if(level == 0) {
             boardSizeX = 6;
             boardSizeZ = 4;
             char[,] board = new char[boardSizeX, boardSizeZ]; 
@@ -197,6 +201,9 @@ public class GameManager : MonoBehaviour
             levelBoard[3,2] = 'p';
             levelBoard[3,3] = 'p';
             levelBoard[5,2] = '+';
+        } else {
+            playerPrefsLoader.outputScoreMultipliers(gameScore);
+            SceneManager.LoadScene("StartScreen");
         }
         
     }
@@ -334,6 +341,7 @@ public class GameManager : MonoBehaviour
                 int old_z = (int)(currEnemy.transform.position.z / gameScale);
                 levelBoard[old_x,old_z] = '.';
                 soundBox.playSFX(2);
+                levelScore += currEnemy.enemyScore;
                 Destroy(currEnemy.ConvertTo<GameObject>());
                 i--;
             }
@@ -356,6 +364,7 @@ public class GameManager : MonoBehaviour
     public void considerRestart(){
         if((player.currentHealth <= 0) || (player.transform.position.y < -5)){
             soundBox.playSFX(3);
+            levelScore = 0;
             establishLevel();
             player.moveCamera();
         }
@@ -367,6 +376,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void establishLevel(){
+        gameScore += levelScore;
         removeAllEnemies();
         levelGenerator.removeAllTiles();
         levelGenerator.removePillar();

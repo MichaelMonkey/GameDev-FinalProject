@@ -1,5 +1,6 @@
 using System.Data;
 using NUnit.Framework.Internal;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -48,5 +49,12 @@ public class PlayerPrefsLoader : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void outputScoreMultipliers(int playerScore){
+        PlayerPrefs.SetInt("currScore", playerScore);
+        PlayerPrefs.SetInt("currDifficulty", difficultySetting);
+        PlayerPrefs.SetInt("currPlayerWarning", playerWarning);
+        PlayerPrefs.SetInt("currEnemyWarning", enemyWarning);
     }
 }
