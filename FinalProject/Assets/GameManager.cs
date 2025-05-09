@@ -66,14 +66,15 @@ public class GameManager : MonoBehaviour
     public int playerWarning;
     public int enemyHealthMult;
     public int enemyWarning;
-    int gameScore = 0;
+    public int gameScore = 0;
     int levelScore = 0;
 
     public SoundBox soundBox;
 
     void Start()
     {
-        gameScore = 0;
+        gameScore = PlayerPrefs.GetInt("StartScore", 0);
+        currentLevel = PlayerPrefs.GetInt("StartLevel", 0);
         playerHealthMult = playerPrefsLoader.playerHealthMult;
         playerWarning = playerPrefsLoader.playerWarning;
         enemyHealthMult = playerPrefsLoader.enemyHealthMult;
@@ -81,7 +82,7 @@ public class GameManager : MonoBehaviour
         attackManager.playerWarning = playerWarning;
         attackManager.enemyWarning = enemyWarning;
         player.maxHealth *= playerHealthMult;
-        loadLevel(0);
+        loadLevel(currentLevel);
         playerHealthDisplay.intializeHealthBar(player.maxHealth, PlayerBarPrefab, PlayerBarFaded, PlayerBarActive, player.transform.position, playerHealthMult);
     }
 
