@@ -73,11 +73,9 @@ public class GameManager : MonoBehaviour
         enemyWarning = playerPrefsLoader.enemyWarning;
         attackManager.playerWarning = playerWarning;
         attackManager.enemyWarning = enemyWarning;
-        loadLevel(0);
         player.maxHealth *= playerHealthMult;
-        player.currentHealth = player.maxHealth;
+        loadLevel(0);
         playerHealthDisplay.intializeHealthBar(player.maxHealth, PlayerBarPrefab, PlayerBarFaded, PlayerBarActive, player.transform.position, playerHealthMult);
-        initEnemyHealthBarDisplays();
     }
 
     // Update is called once per frame
@@ -89,17 +87,26 @@ public class GameManager : MonoBehaviour
         doPlayerAttackTurn();
         doEnemyTurn();
         doEnemyAttackTurn();
+        considerRestart();
+        removeDeadEnemies();
     }
 
     public void loadLevel(int level){
+        player.transform.position = new Vector3(0, 0, 0);
+        player.currentHealth = player.maxHealth;
         playerTurn = true;
+        playerAttackTurn = false;
         enemyTurn = false;
+        enemyAttackTurn = false;
         generateLevelBoard(level);
         levelGenerator.setColors(level);
         levelGenerator.generateLevelTiles(levelBoard, boardSizeX, boardSizeZ);
         enemies = levelGenerator.generateEnemies(levelBoard, boardSizeX, boardSizeZ, enemyHealthMult);
+        initEnemyHealthBarDisplays();
         currentLevel = level;
     }
+
+
 
     public void generateLevelBoard(int level){
         if(level == 1){
@@ -239,6 +246,42 @@ public class GameManager : MonoBehaviour
             enemyAttackTurn = false;
             yield return new WaitForSeconds(turnStaggerTime);
             playerTurn = true;
+        }
+    }
+
+    public void removeDeadEnemies(){
+        for(int i = 0; i < enemies.Count; i++){
+            Enemy currEnemy = enemies[i];
+            if(currEnemy.currentHealth <= 0){
+                Canvas currCanvas = enemyCanvases[i];
+                HealthBarDisplay currHealthBar = enemyHealthBars[i];
+                enemies.Remove(currEnemy);
+                enemyCanvases.Remove(currCanvas);
+                enemyHealthBars.Remove(currHealthBar);
+                Destroy(currEnemy.ConvertTo<GameObject>());
+                i--;
+            }
+        }
+    }
+
+    public void removeAllEnemies(){
+        for(int i = 0; i < enemies.Count; i++){
+            Enemy currEnemy = enemies[i];
+            Canvas currCanvas = enemyCanvases[i];
+            HealthBarDisplay currHealthBar = enemyHealthBars[i];
+            enemies.Remove(currEnemy);
+            enemyCanvases.Remove(currCanvas);
+            enemyHealthBars.Remove(currHealthBar);
+            Destroy(currEnemy.ConvertTo<GameObject>());
+            i--;
+        }
+    }
+
+    public void considerRestart(){
+        if(player.currentHealth <= 0){
+            removeAllEnemies();
+            levelGenerator.removeAllTiles();
+            loadLevel(currentLevel);
         }
     }
 }

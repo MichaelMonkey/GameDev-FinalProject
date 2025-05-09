@@ -76,15 +76,18 @@ public class Enemy : MonoBehaviour
             //Debug.Log("hit! "+other.gameObject.tag);
             if(touched.CompareTag("AttackBox")){
                 Attack attack = touched.transform.parent.ConvertTo<Attack>();
-                //storeAttack = attack;
-                currentHealth -= attack.damage;
-                //hurtEvent(attack.damage);
                 moveManager.gameManager.attackManager.removeAttack(attack);
                 Destroy(attack);
-                //print("AttackBox removed and destroyed");
+                playHurtSound();
+                currentHealth -= attack.damage;
             }
         } else {
             processingCollision += 1;
         }
+    }
+
+    public void playHurtSound(){
+        AudioSource audioSource = this.GetComponent<AudioSource>();
+        audioSource.Play();
     }
 }

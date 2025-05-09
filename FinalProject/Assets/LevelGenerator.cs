@@ -2,6 +2,8 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.VisualScripting;
+using System;
+using System.Collections;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class LevelGenerator : MonoBehaviour
     private float tileSat = 0.9f;
     private float tileVLight = 1f;
     private float tileVDark = 0.8f;
+    public List<GameObject> tiles;
 
     [Header("Board")]
     public int boardMinSize;
@@ -67,6 +70,7 @@ public class LevelGenerator : MonoBehaviour
                     Renderer tileRender = newTile.GetComponent<Renderer>();
                     tileRender.material = TileMaterial;
                     tileRender.material.color = tileColor;
+                    tiles.Add(newTile);
                 }
             }
         }
@@ -91,6 +95,15 @@ public class LevelGenerator : MonoBehaviour
             }
         }
         return enemies;
+    }
+
+    public void removeAllTiles(){
+        for(int i = 0; i < tiles.Count; i++){
+            GameObject currTile = tiles[i];
+            tiles.Remove(currTile);
+            Destroy(currTile);
+            i--;
+        }
     }
 
 }

@@ -6,11 +6,13 @@ using TMPro;
 //using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class HealthBarDisplay : MonoBehaviour
 {
     public GameObject BarPrefab;
-    public GameObject[] bars;
+    public List<GameObject> bars;
     public Color fadedColor;
     public Color activeColor;
 
@@ -30,7 +32,7 @@ public class HealthBarDisplay : MonoBehaviour
         BarPrefab = barPrefab;
         fadedColor = fadedC;
         activeColor = activeC;
-        bars = new GameObject[maxHealth];
+        bars = new List<GameObject>();
         for(int i = 0; i < maxHealth; i++){
             GameObject newBar = Instantiate(BarPrefab, position, Quaternion.identity, this.transform);
             /*Vector3 barPosition = newBar.GetComponent<RectTransform>().position;
@@ -39,11 +41,14 @@ public class HealthBarDisplay : MonoBehaviour
             */newBar.transform.localPosition = Vector3.zero;
             newBar.transform.localScale = new Vector3(1.25f/rescale, 1, 1);
             //newBar.transform.x /= 2;
-            bars[i] = newBar;
+            bars.Add(newBar);
         }
     }
 
     public void displayHealthBar(int maxHealth, int currentHealth){
+        if(bars.Count <= 0){
+            return;
+        }
         Color barColor;
         for(int i = 0; i < maxHealth; i++){
             if(i < currentHealth){
