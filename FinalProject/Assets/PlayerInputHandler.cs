@@ -86,26 +86,31 @@ public class PlayerInputHandler : MonoBehaviour
             selectorMovement -= globalBackward;
             gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed); 
             setDirection = 1;
+            player.moveManager.gameManager.soundBox.playSystem(0);
         }
         else if(Input.GetKeyDown(KeyCode.A)){
             selectorMovement -= globalRight;
             gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed);
             setDirection = 4;
+            player.moveManager.gameManager.soundBox.playSystem(0);
         }
         else if(Input.GetKeyDown(KeyCode.S)){
             selectorMovement += globalBackward;
             gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed);
             setDirection = 3;
+            player.moveManager.gameManager.soundBox.playSystem(0);
         }
         else if(Input.GetKeyDown(KeyCode.D)){
             selectorMovement += globalRight;
             gridSelector.MoveAroundPlayer(player.transform.position, selectorMovement, player.playerSpeed);
             setDirection = 2;
+            player.moveManager.gameManager.soundBox.playSystem(0);
         } else if (Input.GetKeyDown(KeyCode.Space)){
             if(setDirection != -1){
                 direction = setDirection;
                 //gridSelector.Disappear();
                 setDirection = -1;
+                player.moveManager.gameManager.soundBox.playSystem(1);
             }
         }
         return direction;
@@ -114,11 +119,13 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void processNumberClicks(){
         if(Input.GetKeyDown(KeyCode.Alpha1)){
-            Debug.Log("Switched to moving");
+            player.moveManager.gameManager.soundBox.playSystem(0);
+            //Debug.Log("Switched to moving");
             pcm = PlayerChooseMove.MOVE;
             gridSelector.Disappear();
         } else if(Input.GetKeyDown(KeyCode.Alpha2)){
-            Debug.Log("Switched to attacking");
+            player.moveManager.gameManager.soundBox.playSystem(0);
+            //Debug.Log("Switched to attacking");
             pcm = PlayerChooseMove.ATTACK;
             gridSelector.Teleport(player.transform.position);
         } 

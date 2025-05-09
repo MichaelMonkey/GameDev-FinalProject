@@ -9,6 +9,7 @@ public class AudioSettings : MonoBehaviour
     public Slider masterSlider;
     public Slider sfxSlider;
     public Slider musicSlider;
+    public Slider systemSlider;
     public AudioMixer audioMixer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,6 +23,9 @@ public class AudioSettings : MonoBehaviour
         float musicVolume = PlayerPrefs.GetFloat("musicVolume", -10f);
         musicSlider.value = musicVolume;
         SetSFXVolume();
+        float systemVolume = PlayerPrefs.GetFloat("systemVolume", 0f);
+        systemSlider.value = systemVolume;
+        SetSystemVolume();
     }
 
     // Update is called once per frame
@@ -45,5 +49,9 @@ public class AudioSettings : MonoBehaviour
     public void SetMusicVolume(){
         SetVolume("MusicVolume", musicSlider.value);
         PlayerPrefs.SetFloat("musicVolume", musicSlider.value);
+    }
+    public void SetSystemVolume(){
+        SetVolume("SystemVolume", systemSlider.value);
+        PlayerPrefs.SetFloat("systemVolume", systemSlider.value);
     }
 }
