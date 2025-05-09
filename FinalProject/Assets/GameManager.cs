@@ -110,7 +110,26 @@ public class GameManager : MonoBehaviour
 
     public void generateLevelBoard(int level){
         if(level == 1){
-
+            boardSizeX = 6;
+            boardSizeZ = 10;
+            char[,] board = new char[boardSizeX, boardSizeZ]; 
+            for(int x = 0; x < boardSizeX; x++){
+                for(int z = 0; z < boardSizeZ; z++){
+                    board[x,z] = '.';
+                }
+            }
+            levelBoard = board;
+            levelBoard[0,0] = 'P';
+            levelBoard[4,2] = '#';
+            levelBoard[4,3] = '#';
+            levelBoard[4,4] = '#';
+            levelBoard[4,5] = '#';
+            levelBoard[4,6] = '#';
+            levelBoard[4,7] = '#';
+            //levelBoard[3,2] = 'p';
+            levelBoard[2,3] = 'p';
+            levelBoard[3,2] = 'p';
+            levelBoard[5,8] = 'p';
         } else {
             boardSizeX = 6;
             boardSizeZ = 4;
@@ -121,12 +140,13 @@ public class GameManager : MonoBehaviour
                 }
             }
             levelBoard = board;
+            levelBoard[0,0] = 'P';
+            levelBoard[4,2] = '#';
+            levelBoard[4,3] = '#';
+            //levelBoard[3,2] = 'p';
+            levelBoard[2,3] = 'p';
         }
-        levelBoard[0,0] = 'P';
-        levelBoard[4,2] = '#';
-        levelBoard[4,3] = '#';
-        //levelBoard[3,2] = 'p';
-        levelBoard[2,3] = 'p';
+        
     }
 
     public void initEnemyHealthBarDisplays(){
