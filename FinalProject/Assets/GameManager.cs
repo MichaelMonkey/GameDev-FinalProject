@@ -66,6 +66,8 @@ public class GameManager : MonoBehaviour
     public int enemyHealthMult;
     public int enemyWarning;
 
+    public SoundBox soundBox;
+
     void Start()
     {
         playerHealthMult = playerPrefsLoader.playerHealthMult;
@@ -93,6 +95,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void loadLevel(int level){
+        //soundBox.stopMusic();
         player.returnToStartPosition();
         player.currentHealth = player.maxHealth;
         playerTurn = true;
@@ -106,6 +109,7 @@ public class GameManager : MonoBehaviour
         levelGenerator.generatePillar(boardSizeX, boardSizeZ);
         initEnemyHealthBarDisplays();
         currentLevel = level;
+        soundBox.startMusic();
     }
 
 
@@ -319,6 +323,7 @@ public class GameManager : MonoBehaviour
                 int old_x = (int)(currEnemy.transform.position.x / gameScale);
                 int old_z = (int)(currEnemy.transform.position.z / gameScale);
                 levelBoard[old_x,old_z] = '.';
+                soundBox.playSFX(2);
                 Destroy(currEnemy.ConvertTo<GameObject>());
                 i--;
             }
@@ -340,6 +345,7 @@ public class GameManager : MonoBehaviour
 
     public void considerRestart(){
         if((player.currentHealth <= 0) || (player.transform.position.y < -5)){
+            soundBox.playSFX(3);
             establishLevel();
         }
     }
@@ -355,4 +361,5 @@ public class GameManager : MonoBehaviour
         levelGenerator.removePillar();
         loadLevel(currentLevel);
     }
+
 }

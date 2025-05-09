@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
             cc.enabled = false;
             transform.position = checkPosition;
             transform.LookAt(transform.position + direction);
+            moveManager.gameManager.soundBox.playSFX(0);
             moveCamera();
             cc.enabled = true;
         }
@@ -160,8 +161,7 @@ public class Player : MonoBehaviour
         if(currentHealth <= 0){
             deathEvent();
         } else {
-            audioSource.resource = hurtSound;
-            audioSource.Play();
+            moveManager.gameManager.soundBox.playSFX(1);
         }
     }
 

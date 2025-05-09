@@ -78,7 +78,7 @@ public class Enemy : MonoBehaviour
                 Attack attack = touched.transform.parent.ConvertTo<Attack>();
                 moveManager.gameManager.attackManager.removeAttack(attack);
                 Destroy(attack);
-                playHurtSound();
+                moveManager.gameManager.soundBox.playSFX(1);
                 currentHealth -= attack.damage;
             }
         } else {
@@ -86,8 +86,4 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void playHurtSound(){
-        AudioSource audioSource = this.GetComponent<AudioSource>();
-        audioSource.Play();
-    }
 }
