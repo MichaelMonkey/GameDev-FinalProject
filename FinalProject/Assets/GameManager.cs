@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void loadLevel(int level){
-        player.transform.position = new Vector3(0, 0, 0);
+        player.returnToStartPosition();
         player.currentHealth = player.maxHealth;
         playerTurn = true;
         playerAttackTurn = false;
@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
         levelGenerator.setColors(level);
         levelGenerator.generateLevelTiles(levelBoard, boardSizeX, boardSizeZ);
         enemies = levelGenerator.generateEnemies(levelBoard, boardSizeX, boardSizeZ, enemyHealthMult);
+        levelGenerator.generatePillar(boardSizeX, boardSizeZ);
         initEnemyHealthBarDisplays();
         currentLevel = level;
     }
@@ -298,10 +299,20 @@ public class GameManager : MonoBehaviour
     }
 
     public void considerRestart(){
-        if(player.currentHealth <= 0){
-            removeAllEnemies();
-            levelGenerator.removeAllTiles();
-            loadLevel(currentLevel);
+        if((player.currentHealth <= 0) || (player.transform.position.y < -5)){
+            establishLevel();
         }
+    }
+
+    public void nextLevel(){
+        currentLevel += 1;
+        establishLevel();
+    }
+
+    public void establishLevel(){
+        removeAllEnemies();
+        levelGenerator.removeAllTiles();
+        levelGenerator.removePillar();
+        loadLevel(currentLevel);
     }
 }

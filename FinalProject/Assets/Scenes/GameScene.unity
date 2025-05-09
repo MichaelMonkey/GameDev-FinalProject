@@ -432,10 +432,13 @@ MonoBehaviour:
   tileScale: 3
   TileMaterial: {fileID: 2100000, guid: 9d35a7ce14cd51b4abe772c93e70ebd9, type: 2}
   tileHue: 0.1
+  tiles: []
   boardMinSize: 11
   boardMaxSize: 11
   yPosition: -0.45
   Board: {fileID: 1124878662}
+  PillarPrefab: {fileID: 6080221292660707224, guid: fab10b7d41f19b44ea80a983e22ef5dc, type: 3}
+  pillar: {fileID: 0}
   EnemyPieces: {fileID: 122906683}
   EnemyPawnPrefab: {fileID: 3500068130066303066, guid: 9694ee59a4757f048a78f23bfa11009d, type: 3}
   enemyPawnYOffset: -0.3
@@ -722,7 +725,7 @@ MonoBehaviour:
   playerAttackTurn: 0
   enemyTurn: 0
   enemyAttackTurn: 0
-  turnStaggerTime: 0.1
+  turnStaggerTime: 0.025
   moveManager: {fileID: 1185496789}
   currentLevel: 0
   boardSizeX: 0

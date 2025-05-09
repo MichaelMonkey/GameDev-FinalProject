@@ -103,6 +103,9 @@ public class Player : MonoBehaviour
                 Destroy(attack);
                 //print("AttackBox removed and destroyed");
             }
+            if (touched.CompareTag("Exit")){
+                moveManager.gameManager.nextLevel();
+            }
             processingCollision = 0;
         } else {
             processingCollision += 1;
@@ -143,6 +146,13 @@ public class Player : MonoBehaviour
 
     void deathEvent(){
 
+    }
+
+    public void returnToStartPosition(){
+        CharacterController cc = GetComponent<CharacterController>();
+        cc.enabled = false;
+        transform.position = new Vector3(0, 0, 0);
+        cc.enabled = true;
     }
 
 /*

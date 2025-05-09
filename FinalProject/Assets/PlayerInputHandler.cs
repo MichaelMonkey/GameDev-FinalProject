@@ -56,7 +56,8 @@ public class PlayerInputHandler : MonoBehaviour
             didMove = true;
             gridSelector.Disappear();
         } else if(Input.GetKeyDown(KeyCode.RightBracket)){
-            player.revertPosition();
+            //player.revertPosition();
+            player.returnToStartPosition();
         }
         player.MoveWithCC(finalMovement, 1);
         return didMove;

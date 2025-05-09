@@ -23,6 +23,8 @@ public class LevelGenerator : MonoBehaviour
     public int boardMaxSize;
     public float yPosition = -0.25f;
     public Transform Board;
+    public GameObject PillarPrefab;
+    public GameObject pillar;
 
     [Header("Enemy")]
     public Transform EnemyPieces;
@@ -97,6 +99,13 @@ public class LevelGenerator : MonoBehaviour
         return enemies;
     }
 
+    public void generatePillar( int boardSizeX, int boardSizeZ){
+        int xPosition = (boardSizeX-1)*tileScale;
+        int zPosition = (boardSizeZ-1)*tileScale;
+        pillar = Instantiate(PillarPrefab, new Vector3(xPosition, 0, zPosition), Quaternion.identity, Board);
+        pillar.transform.rotation = Quaternion.Euler(-90, 0, 0);
+    }
+
     public void removeAllTiles(){
         for(int i = 0; i < tiles.Count; i++){
             GameObject currTile = tiles[i];
@@ -104,6 +113,10 @@ public class LevelGenerator : MonoBehaviour
             Destroy(currTile);
             i--;
         }
+    }
+
+    public void removePillar(){
+        Destroy(pillar);
     }
 
 }
