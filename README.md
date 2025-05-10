@@ -1,1 +1,5 @@
-# GameDev-FinalProject
+# No Time To Run (GameDev-FinalProject)
+## Controls and Information
+WASD to pick a direction (relative to the camera). By default the player is moving, pressing 2 switches to attack mode, which has a direction indicator, and pressing spacebar launches an attack. Pressing 1 switches back to moving mode. You have to reach the pillar of light to advance to the next level. Enemies will launch attacks at you as you approach and defeating them will award you points. Being defeated by an enemy resets the level you’re on. Healing auras around the level will provide you with a minor boost to health. Your game score is calculated based on the points you got for defeating the enemies and the difficulty settings you’ve chosen.
+## Description
+No Time To Run is a simplistic action-strategy puzzle game where you have to navigate different levels. Throughout these levels you have to avoid or destroy enemies as you make your way to the pillar of light. Each level ramps up in difficulty and with your score being affected by different difficulty settings you can replay it to try to achieve a high score.
