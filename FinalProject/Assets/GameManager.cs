@@ -173,8 +173,8 @@ public class GameManager : MonoBehaviour
             levelBoard[4,1] = '#';
             levelBoard[5,1] = '#';
             levelBoard[7,1] = '#';
-            levelBoard[7,2] = 'p';
             levelBoard[6,1] = 'p';
+            levelBoard[6,2] = 'p';
             levelBoard[5,1] = '+';
             levelBoard[3,1] = '+';
         }else if(level == 3){
@@ -189,10 +189,10 @@ public class GameManager : MonoBehaviour
             levelBoard = board;
             levelBoard[0,0] = 'P';
             levelBoard[1,1] = '#';
-            levelBoard[1,2] = '#';
+            //levelBoard[1,2] = '#';
             levelBoard[3,3] = 'p';
             levelBoard[4,0] = 'p';
-            levelBoard[4,3] = 'p';
+            //levelBoard[4,3] = 'p';
             levelBoard[2,2] = '+';
         } else if(level == 0) {
             boardSizeX = 6;
