@@ -152,20 +152,6 @@ public class MoveManager : MonoBehaviour
         Boolean tryAfter = InZLine(from_x+1, to_x, from_z, to_z, range);
         return tryOn || tryBefore || tryAfter;
     }
-
-/*
-    public Boolean checkPlayerMoveAttack(){
-        int[] p_coords = findPlayerOnBoard();
-        int p_x = p_coords[0];
-        int p_z = p_coords[1];
-        Boolean ret = IsEnemy(p_x, p_z);
-        if(ret){
-            Debug.Log("Player attacked enemy");
-            damageEnemy(findEnemyAt(p_x, p_z), 2);
-        }
-        return ret;
-    }
-*/
     
     public int attackDirection(int[] direction){
         int x_dir = direction[0];
@@ -190,33 +176,11 @@ public class MoveManager : MonoBehaviour
         int[] e_coords = findEnemyOnBoard();
         int e_x = e_coords[0];
         int e_z = e_coords[1];
-        //Debug.Log("Enemy on board at [x,z]: "+ e_x+","+e_z);
         if(playerWithinEnemyRange(enemy.enemyType)){
             int direction = attackDirection(GetDirection(e_x, e_z, p_x, p_z));
             AttackManager attackManager = gameManager.attackManager;
             attackManager.addNewAttack(enemy.transform.position, direction, enemy.enemyType);
-            //Debug.Log("Attacked player on board at [x,z]: "+ p_x+","+ p_z);
-            //damagePlayer(1);
         }
-        //int[] move = new int[] {0, 0};
-        /*int[,] attackMoves = getListOfLegalEnemyAttackMoves(e_x, e_z);
-        if(attackMoves.Length > 0){
-            Debug.Log("Attack move");
-            move = pickFromMoveList(attackMoves);
-            Debug.Log(move[0]+","+move[1]);
-        } else {
-            int[,] randomMoves = getListOfRandomMoves();
-            if(randomMoves.Length > 0){
-                Debug.Log("Random move");
-                move = pickFromMoveList(randomMoves);
-            Debug.Log(move[0]+","+move[1]);
-            }
-        }
-        if(move == new int[] {0, 0}){
-            Debug.Log("No moves");
-        }
-        */
-        //int ret = -1;
     }
 
 
@@ -241,34 +205,26 @@ public class MoveManager : MonoBehaviour
         int p_z = p_coords[1];
         if(enemyType == 'p'){
             if(InZLine(e_x, p_x, e_z, p_z, 1)){
-                Debug.Log("EyesOnPlayer:ZLine!");
                 return true;
             } else if (InXLine(e_x, p_x, e_z, p_z, 1)){
-                Debug.Log("EyesOnPlayer:XLine!");
                 return true;
             }
         } else if(enemyType == 'l'){
             if(InZLine(e_x, p_x, e_z, p_z, 2)){
-                Debug.Log("EyesOnPlayer:ZLine!");
                 return true;
             } else if (InXLine(e_x, p_x, e_z, p_z, 2)){
-                Debug.Log("EyesOnPlayer:XLine!");
                 return true;
             }
         } else if(enemyType == 'r'){
             if(InZLine(e_x, p_x, e_z, p_z, 3)){
-                Debug.Log("EyesOnPlayer:ZLine!");
                 return true;
             } else if (InXLine(e_x, p_x, e_z, p_z, 3)){
-                Debug.Log("EyesOnPlayer:XLine!");
                 return true;
             }
         } else if(enemyType == 'k'){
             if(WithinShiftZLine(e_x, p_x, e_z, p_z, 2, 1)){
-                Debug.Log("EyesOnPlayer:ShiftZLine!");
                 return true;
             } else if (WithinShiftXLine(e_x, p_x, e_z, p_z, 2, 1)){
-                Debug.Log("EyesOnPlayer:ShiftXLine!");
                 return true;
             }
         }

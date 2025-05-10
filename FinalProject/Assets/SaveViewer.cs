@@ -60,12 +60,21 @@ public class SaveViewer : MonoBehaviour
     }
 
     public void clickSave1(){
+        if(s1Score == -1){
+            return;
+        }
         screenHandler.StartGame(s1Score, s1Level);
     }
     public void clickSave2(){
+        if(s2Score == -1){
+            return;
+        }
         screenHandler.StartGame(s2Score, s2Level);
     }
     public void clickSave3(){
+        if(s2Score == -1){
+            return;
+        }
         screenHandler.StartGame(s3Score, s3Level);
     }
 }
