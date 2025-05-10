@@ -1,14 +1,10 @@
-using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 using System.Collections.Generic;
-using UnityEngine.UI;
-using System.Linq.Expressions;
 using System;
 using System.Collections;
-using UnityEditor.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour

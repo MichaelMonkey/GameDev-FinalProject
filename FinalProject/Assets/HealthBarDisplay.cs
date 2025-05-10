@@ -1,12 +1,5 @@
-using System;
-using System.Linq;
-using Microsoft.Unity.VisualStudio.Editor;
-using NUnit.Framework;
-using TMPro;
-//using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using System.Collections.Generic;
 
 public class HealthBarDisplay : MonoBehaviour

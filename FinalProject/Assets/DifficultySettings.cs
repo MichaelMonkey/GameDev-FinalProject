@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 public class DifficultySettings : MonoBehaviour
 {
     public TMP_Dropdown difficultyDropdown;

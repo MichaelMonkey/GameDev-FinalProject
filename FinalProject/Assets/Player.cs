@@ -1,14 +1,6 @@
-using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
-using Quaternion = UnityEngine.Quaternion;
-using UnityEngine.SceneManagement;
-using UnityEditor.Callbacks;
-using System.Collections;
 using System;
-using Unity.Cinemachine;
-using System.Runtime.CompilerServices;
-using System.Linq;
 using Unity.VisualScripting;
 
 public class Player : MonoBehaviour

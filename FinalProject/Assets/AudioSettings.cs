@@ -1,9 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 public class AudioSettings : MonoBehaviour
 {
     public Slider masterSlider;

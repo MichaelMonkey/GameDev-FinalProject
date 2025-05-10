@@ -1,13 +1,6 @@
 using System;
-using System.Data;
-using System.Threading;
-//using Unity.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
-using System.Collections;
-using Unity.VisualScripting;
-using System.Runtime.InteropServices.WindowsRuntime;
 public class MoveManager : MonoBehaviour
 {
     public GameManager gameManager;
