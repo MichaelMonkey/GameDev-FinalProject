@@ -65,9 +65,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void processMouseClicks(){
          if(Input.GetMouseButtonDown(0)){
-            Debug.Log("Pressed left-click.");
          } else if(Input.GetMouseButtonDown(1)){
-            Debug.Log("Pressed right-click.");
             //returnSelector();
          }
     }

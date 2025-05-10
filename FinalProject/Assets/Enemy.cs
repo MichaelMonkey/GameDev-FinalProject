@@ -13,7 +13,6 @@ using Unity.VisualScripting;
 
 public class Enemy : MonoBehaviour
 {
-    //[Header("Health")]
     public int maxHealth = 3;
     public int currentHealth = 3;
     public float enemySpeed = 3f;
@@ -23,12 +22,7 @@ public class Enemy : MonoBehaviour
     public int processingCollision = 0;
     public MoveManager moveManager;
     public GameObject temp;
-    //public Attack storeAttack;
-    /*
-    [Header("Enemy Types")]
-    public GameObject[] tester;
-    public enum EnemyType {PAWN};
-*/
+
     void Start()
     {
         moveManager = GameObject.Find("MoveManager").ConvertTo<MoveManager>();

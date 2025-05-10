@@ -253,7 +253,6 @@ public class MoveManager : MonoBehaviour
             for(int z = 0; z < boardSizeZ; z++){
                 int[] curr_move = new int[] {x, z};
                 if(isEnemyMoveLegal(from_x, from_z, x, z) == 1){
-                    Debug.Log("LegalMove: "+x+","+z);
                     ret = addLegalMove(ret, curr_move);
                 }
             }
@@ -306,32 +305,14 @@ public class MoveManager : MonoBehaviour
         return new int[2];
     }
 
-    /*public int[,] getListOfRandomMoves(){
-        int[] e_coords = findEnemyOnBoard();
-        int e_x = e_coords[0];
-        int e_z = e_coords[1];
-        int[,] ret = new int[0,2];
-        for(int i = 0; i < 4; i++){
-            int[] randomMove = randomMoveDirection(i);
-            int x = randomMove[0];
-            int z = randomMove[1];
-            if(!OutOfBounds(e_x+x, e_z+z)){
-                ret = addLegalMove(ret, randomMove);
-            }
-        }
-        return ret;
-    }*/
-
     public int[] pickFromMoveList(int[,] moveList){
         int size = moveList.Length;
-        Debug.Log("Size: "+size);
         int[] ret = new int[2];
         if(size <= 0){
             ret[0] = 0;
             ret[1] = 0;
         } else {
             int pick = (int) Random.Range(0, size-1);
-            Debug.Log("Pick: "+pick);
             ret[0] = moveList[pick, 0];
             ret[1] = moveList[pick, 1];
         }

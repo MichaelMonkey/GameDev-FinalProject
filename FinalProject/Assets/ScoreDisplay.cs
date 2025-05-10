@@ -18,7 +18,6 @@ public class ScoreDisplay : MonoBehaviour
     public GameObject PlayerWarning;
     public GameObject EnemyWarning;
     public GameObject FinalMultiplier;
-    public TextMeshProUGUI temp;
     public void Start()
     {
         currScore = PlayerPrefs.GetInt("currScore", -1);
@@ -67,13 +66,6 @@ public class ScoreDisplay : MonoBehaviour
         addText(PlayerWarning, "+" + stringify(getPlayerWarningyMultiplier(hsPlayerWarning)));
         addText(EnemyWarning, "+" + stringify(getEnemyWarningyMultiplier(hsEnemyWarning)));
         addText(FinalMultiplier, stringify(getMultiplier(hsDifficulty, hsPlayerWarning, hsEnemyWarning)));
-        /*
-        BaseScore;
-    public GameObject DifficultyMultiplier;
-    public GameObject PlayerWarning;
-    public GameObject EnemyWarning;
-    public GameObject FinalMultiplier;
-        */
     }
     public void HideDisplay(){
         GetComponent<Canvas>().enabled = false;

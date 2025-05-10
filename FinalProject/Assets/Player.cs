@@ -69,18 +69,13 @@ public class Player : MonoBehaviour
             return;
         }
         if(direction != Vector3.zero){
-            print(direction);
+            //print(direction);
         }
         CharacterController cc = GetComponent<CharacterController>();
         cc.Move(direction * playerSpeed);
         transform.LookAt(transform.position + direction);
         moveCamera();
-        /*if(check == 1){
-            Boolean hit = moveManager.checkPlayerMoveAttack();
-            if(hit){
-                revertPosition();
-            }
-        }*/
+     
     }
 
     public void moveCamera(){
@@ -130,28 +125,6 @@ public class Player : MonoBehaviour
         } else {
             processingCollision += 1;
         }
-        /*if(other.gameObject.CompareTag("Key")){
-            pickupEvent();
-            Destroy(other.gameObject);
-        }
-        if(other.gameObject.CompareTag("Gate")){
-            if(keysCollected > 0){
-                gateEvent();
-                Destroy(other.gameObject);
-            } else {
-                wallEvent();
-            }
-        }*/
-        /*
-        if(other.gameObject.CompareTag("Wall")){
-            wallEvent();
-        }
-        if(other.gameObject.CompareTag("Exit")){
-            StartCoroutine(WinEvent());
-        }
-        if(other.gameObject.CompareTag("Trap")){
-            StartCoroutine(DeathEvent());
-        }*/
     }
 
     void hurtEvent(int damage){

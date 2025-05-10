@@ -77,9 +77,6 @@ public class Attack : MonoBehaviour
         }
         establishSpaces();
         return true;
-        /*else if(travel > 0){
-
-        }*/
     }
 
     public void establishSpaces(){

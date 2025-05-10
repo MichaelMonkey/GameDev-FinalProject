@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -63,7 +64,9 @@ public class GameManager : MonoBehaviour
     public int enemyHealthMult;
     public int enemyWarning;
     public int gameScore = 0;
-    int levelScore = 0;
+    public int levelScore = 0;
+    public GameObject scoreDisplay;
+
 
     public SoundBox soundBox;
 
@@ -80,6 +83,7 @@ public class GameManager : MonoBehaviour
         player.maxHealth *= playerHealthMult;
         loadLevel(currentLevel);
         playerHealthDisplay.intializeHealthBar(player.maxHealth, PlayerBarPrefab, PlayerBarFaded, PlayerBarActive, player.transform.position, playerHealthMult);
+        updateScoreDisplay();
     }
 
     // Update is called once per frame
@@ -93,6 +97,15 @@ public class GameManager : MonoBehaviour
         doEnemyAttackTurn();
         considerRestart();
         removeDeadEnemies();
+    }
+
+    public void updateScoreDisplay(){
+        setText(scoreDisplay, ""+(gameScore+levelScore));
+    }
+
+    public void setText(GameObject gameObject, String text){
+        TextMeshProUGUI textBox = gameObject.GetComponent<TextMeshProUGUI>();
+        textBox.text = text;
     }
 
     public void loadLevel(int level){
@@ -208,13 +221,9 @@ public class GameManager : MonoBehaviour
     public void initEnemyHealthBarDisplays(){
         enemyCanvases = new List<Canvas>();
         enemyHealthBars = new List<HealthBarDisplay>();
-        //addEnemyHealthBarDisplay(testEnemy);
         for(int i = 0; i < enemies.Count; i++){
             addEnemyHealthBarDisplay(enemies[i]);
         }
-        /*for(int i = 0; i < enemies.Count; i++){
-            addEnemyHealthBarDisplay(enemies[i]);
-        }*/
     }
 
     public void addEnemyHealthBarDisplay(Enemy enemy){
@@ -226,21 +235,6 @@ public class GameManager : MonoBehaviour
         newHealthBarDisplay.intializeHealthBar(enemy.maxHealth, EnemyBarPrefab, EnemyBarFaded, EnemyBarActive, new Vector3(0, 0, 0), enemyHealthMult);
         newHealthBarDisplay.transform.localPosition = new Vector3(0, overheadOffset, 0);
         enemyHealthBars.Add(newHealthBarDisplay);
-       /* Vector3 enemyPosition = enemy.transform.position;
-        Debug.Log(enemyPosition);
-        //GameObject newCanvas = Instantiate(enemyHealthCanvasPrefab, enemyPosition, Quaternion.identity, enemy.transform);
-        Canvas newEnemyCanvas = testHealthArea;//newCanvas.ConvertTo<Canvas>();
-        Vector3 cavnasPosition = newEnemyCanvas.transform.position;
-        GameObject newBarDisplay = Instantiate(HealthBarDisplayPrefab, cavnasPosition + new Vector3(0, 2, 0), Quaternion.identity, newEnemyCanvas.transform);
-        HealthBarDisplay newHealthBarDisplay = newBarDisplay.ConvertTo<HealthBarDisplay>();
-        Debug.Log(newHealthBarDisplay.GetComponent<Transform>().position);
-        Debug.Log(newHealthBarDisplay.GetComponent<RectTransform>().position);
-        //newEnemyCanvas.transform.rotation = GameCamera.transform.rotation;
-        enemyCanvases.Add(newEnemyCanvas);
-        newHealthBarDisplay.intializeHealthBar(enemy.maxHealth, EnemyBarPrefab, EnemyBarFaded, EnemyBarActive, 0);
-        newHealthBarDisplay.displayHealthBar(enemy.maxHealth, enemy.currentHealth);
-        enemyHealthBars.Add(newHealthBarDisplay);
-    */
     }
 
     public Canvas creatNewCanvas(Vector3 position, Transform parent){
@@ -251,24 +245,18 @@ public class GameManager : MonoBehaviour
     }
 
     public void displayEnemyHealthBars(){
-        //enemyHealthBars[0].displayHealthBar(3,3/*, new Vector3(0, 0, 0)*/);
         for(int i = 0; i < enemyHealthBars.Count; i++){
             Enemy enemy = enemies[i];
             enemyHealthBars[i].displayHealthBar(enemy.maxHealth, enemy.currentHealth);
         }
-        //enemyHealthBars[1].displayHealthBar(enemies[0].maxHealth, enemies[0].currentHealth);
         for(int i = 0; i < enemyCanvases.Count; i++){
             enemyCanvases[i].transform.rotation = GameCamera.transform.rotation;
         }
-        /*for(int i = 0; i < enemies.Count; i++){
-            enemyHealthBars[i].displayHealthBar(enemies[i].maxHealth, enemies[i].currentHealth);
-        }*/
     }
 
     public void doPlayerTurn(){
         if(playerTurn == true){
             playerInputHandler.processNumberClicks();
-            //playerInputHandler.processMouseClicks();
             int attackDirection = playerInputHandler.processAttackClicks();
             Boolean didMove = playerInputHandler.processMovementClicks();
             if(didMove){
@@ -279,7 +267,6 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(SwitchTurnStagger());
             }
         }
-        //playerInputHandler.processMouseClicks();
     }
     public void doPlayerAttackTurn(){
         if(playerAttackTurn == true){
@@ -340,6 +327,7 @@ public class GameManager : MonoBehaviour
                 soundBox.playSFX(2);
                 levelScore += currEnemy.enemyScore;
                 Destroy(currEnemy.ConvertTo<GameObject>());
+                updateScoreDisplay();
                 i--;
             }
         }
@@ -374,11 +362,13 @@ public class GameManager : MonoBehaviour
 
     public void establishLevel(){
         gameScore += levelScore;
+        levelScore = 0;
         removeAllEnemies();
         levelGenerator.removeAllTiles();
         levelGenerator.removePillar();
         levelGenerator.removeAllAuras();
         loadLevel(currentLevel);
+        updateScoreDisplay();
     }
 
 }
